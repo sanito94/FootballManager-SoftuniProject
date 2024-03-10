@@ -4,6 +4,7 @@ using FootballManager_SoftuniProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FootballManager_SoftuniProject.Data.Migrations
 {
     [DbContext(typeof(FootballManagerDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240310120835_CompletedDatabaseTest2")]
+    partial class CompletedDatabaseTest2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -255,7 +257,7 @@ namespace FootballManager_SoftuniProject.Data.Migrations
                     b.ToTable("Teams");
                 });
 
-            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TeamPlayer", b =>
+            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TeamPlayers", b =>
                 {
                     b.Property<int>("PlayerId")
                         .HasColumnType("int");
@@ -582,7 +584,7 @@ namespace FootballManager_SoftuniProject.Data.Migrations
                     b.Navigation("Stadium");
                 });
 
-            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TeamPlayer", b =>
+            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TeamPlayers", b =>
                 {
                     b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Player", "Player")
                         .WithMany()

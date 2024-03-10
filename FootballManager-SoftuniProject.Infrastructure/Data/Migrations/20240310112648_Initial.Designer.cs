@@ -4,6 +4,7 @@ using FootballManager_SoftuniProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FootballManager_SoftuniProject.Data.Migrations
 {
     [DbContext(typeof(FootballManagerDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240310112648_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,20 +32,6 @@ namespace FootballManager_SoftuniProject.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SeasonYear")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WinnerTeamId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Leagues");
@@ -57,26 +45,7 @@ namespace FootballManager_SoftuniProject.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nationality")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TeamId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("YearsOfExperience")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("TeamId");
 
                     b.ToTable("Managers");
                 });
@@ -89,23 +58,15 @@ namespace FootballManager_SoftuniProject.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AwayTeamId")
+                    b.Property<int?>("PlayerId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("HomeTeamId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Result")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("TeamId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PlayerId");
 
                     b.HasIndex("TeamId");
 
@@ -119,9 +80,6 @@ namespace FootballManager_SoftuniProject.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
 
                     b.Property<int>("ManagerId")
                         .HasColumnType("int");
@@ -153,26 +111,7 @@ namespace FootballManager_SoftuniProject.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("BuildYear")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Capacity")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TeamId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("TeamId");
 
                     b.ToTable("Stadiums");
                 });
@@ -255,7 +194,7 @@ namespace FootballManager_SoftuniProject.Data.Migrations
                     b.ToTable("Teams");
                 });
 
-            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TeamPlayer", b =>
+            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TeamPlayers", b =>
                 {
                     b.Property<int>("PlayerId")
                         .HasColumnType("int");
@@ -273,21 +212,6 @@ namespace FootballManager_SoftuniProject.Data.Migrations
                     b.HasIndex("TeamId");
 
                     b.ToTable("TeamsPlayers");
-                });
-
-            modelBuilder.Entity("MatchPlayer", b =>
-                {
-                    b.Property<int>("MatchesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PlayersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("MatchesId", "PlayersId");
-
-                    b.HasIndex("PlayersId");
-
-                    b.ToTable("MatchPlayer");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -492,19 +416,12 @@ namespace FootballManager_SoftuniProject.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Manager", b =>
-                {
-                    b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Team", "Team")
-                        .WithMany()
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Team");
-                });
-
             modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Match", b =>
                 {
+                    b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Player", null)
+                        .WithMany("Matches")
+                        .HasForeignKey("PlayerId");
+
                     b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Team", null)
                         .WithMany("Matches")
                         .HasForeignKey("TeamId");
@@ -513,7 +430,7 @@ namespace FootballManager_SoftuniProject.Data.Migrations
             modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Player", b =>
                 {
                     b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Manager", "Manager")
-                        .WithMany("Players")
+                        .WithMany()
                         .HasForeignKey("ManagerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -521,21 +438,10 @@ namespace FootballManager_SoftuniProject.Data.Migrations
                     b.Navigation("Manager");
                 });
 
-            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Stadium", b =>
-                {
-                    b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Team", "Team")
-                        .WithMany()
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Team");
-                });
-
             modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Statistic", b =>
                 {
                     b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Match", "Match")
-                        .WithMany("Statistics")
+                        .WithMany()
                         .HasForeignKey("MatchId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -582,7 +488,7 @@ namespace FootballManager_SoftuniProject.Data.Migrations
                     b.Navigation("Stadium");
                 });
 
-            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TeamPlayer", b =>
+            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TeamPlayers", b =>
                 {
                     b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Player", "Player")
                         .WithMany()
@@ -597,27 +503,12 @@ namespace FootballManager_SoftuniProject.Data.Migrations
                     b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Team", "Team")
                         .WithMany("TeamsPlayers")
                         .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Player");
 
                     b.Navigation("Team");
-                });
-
-            modelBuilder.Entity("MatchPlayer", b =>
-                {
-                    b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Match", null)
-                        .WithMany()
-                        .HasForeignKey("MatchesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Player", null)
-                        .WithMany()
-                        .HasForeignKey("PlayersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -671,18 +562,10 @@ namespace FootballManager_SoftuniProject.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Manager", b =>
-                {
-                    b.Navigation("Players");
-                });
-
-            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Match", b =>
-                {
-                    b.Navigation("Statistics");
-                });
-
             modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Player", b =>
                 {
+                    b.Navigation("Matches");
+
                     b.Navigation("Statistics");
 
                     b.Navigation("TeamsPlayers");

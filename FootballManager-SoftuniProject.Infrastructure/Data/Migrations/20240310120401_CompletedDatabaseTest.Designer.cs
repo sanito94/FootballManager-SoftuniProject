@@ -4,6 +4,7 @@ using FootballManager_SoftuniProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FootballManager_SoftuniProject.Data.Migrations
 {
     [DbContext(typeof(FootballManagerDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240310120401_CompletedDatabaseTest")]
+    partial class CompletedDatabaseTest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -255,7 +257,7 @@ namespace FootballManager_SoftuniProject.Data.Migrations
                     b.ToTable("Teams");
                 });
 
-            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TeamPlayer", b =>
+            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TeamPlayers", b =>
                 {
                     b.Property<int>("PlayerId")
                         .HasColumnType("int");
@@ -263,12 +265,7 @@ namespace FootballManager_SoftuniProject.Data.Migrations
                     b.Property<int>("TeamId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PlayerId1")
-                        .HasColumnType("int");
-
                     b.HasKey("PlayerId", "TeamId");
-
-                    b.HasIndex("PlayerId1");
 
                     b.HasIndex("TeamId");
 
@@ -582,22 +579,18 @@ namespace FootballManager_SoftuniProject.Data.Migrations
                     b.Navigation("Stadium");
                 });
 
-            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TeamPlayer", b =>
+            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TeamPlayers", b =>
                 {
                     b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Player", "Player")
-                        .WithMany()
-                        .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Player", null)
                         .WithMany("TeamsPlayers")
-                        .HasForeignKey("PlayerId1");
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Team", "Team")
                         .WithMany("TeamsPlayers")
                         .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Player");

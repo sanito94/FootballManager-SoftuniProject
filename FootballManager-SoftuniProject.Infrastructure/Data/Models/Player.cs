@@ -13,8 +13,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
         public Player()
         {
             Statistics = new List<Statistic>();
-            Matches = new List<Match>();
-            TeamsPlayers = new List<TeamPlayer>();
         }
 
         [Key]
@@ -27,20 +25,16 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
         public int Age { get; set; }
 
         [Required]
-        public string Nationality { get; set; } = null!;
+        public string Country { get; set; } = null!;
 
         [Required]
         public string Position { get; set; } = null!;
 
-
         [Required]
-        public int ManagerId { get; set; }
-        [ForeignKey(nameof(ManagerId))]
-        public Manager Manager { get; set; } = null!;
+        public int TeamId { get; set; }
+        [ForeignKey(nameof(TeamId))] 
+        public Team Team { get; set; } = null!;
 
         public ICollection<Statistic> Statistics { get; set; }
-        public ICollection<Match> Matches { get; set; }
-
-        public ICollection<TeamPlayer> TeamsPlayers { get; set; }
     }
 }

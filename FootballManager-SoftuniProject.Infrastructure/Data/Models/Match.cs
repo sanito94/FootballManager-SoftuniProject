@@ -13,7 +13,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
         public Match()
         {
             Statistics = new List<Statistic>();
-            Players = new List<Player>();
         }
 
         [Key]
@@ -27,13 +26,21 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
 
         [Required]
         public int HomeTeamId { get; set; }
+        [ForeignKey(nameof(HomeTeam))]
+        [NotMapped]
+        public Team HomeTeam { get; set; }
 
         [Required]
         public int AwayTeamId { get; set; }
+        [ForeignKey(nameof(AwayTeam))]
+        [NotMapped]
+        public Team AwayTeam { get; set; }
+
+        [Required]
+        public int StadiumId { get; set; }
+        [ForeignKey(nameof(StadiumId))]
+        public Stadium Stadium { get; set; }
 
         public ICollection<Statistic> Statistics { get; set; }
-
-        public ICollection<Player> Players { get; set; }
-
     }
 }

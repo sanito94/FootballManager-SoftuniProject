@@ -13,9 +13,9 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
     {
         public Team()
         {
-            Matches = new List<Match>();
+            Players = new List<Player>();
             Statistics = new List<Statistic>();
-            TeamsPlayers = new List<TeamPlayer>();
+            TeamsManagers = new List<TeamManager>();
         }
 
         [Key]
@@ -29,27 +29,22 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
         [MaxLength(TeamCountryMaxLenght)]
         public string Country { get; set; } = null!;
 
-
-        [Required]
-        public int LeagueId { get; set; }
-        [ForeignKey(nameof(LeagueId))]
-        public League League { get; set; } = null!;
-
-        [Required]
-        public int ManagerId { get; set; }
-        [ForeignKey(nameof(ManagerId))]
-        public Manager Manager { get; set; } = null!;
-
         [Required]
         public int StadiumId { get; set; }
         [ForeignKey(nameof(StadiumId))]
-        public Stadium Stadium { get; set; } = null!;
+        public Stadium Stadium { get; set; }
 
-        public ICollection<Match> Matches  { get; set; }
+        //[Required]
+        //public int ManagerId { get; set; }
+        //[ForeignKey(nameof(ManagerId))]
+        //public Manager Manager { get; set; } = null!;
+
 
         public ICollection<Statistic> Statistics { get; set; }
 
-        public ICollection<TeamPlayer> TeamsPlayers { get; set; }
+        public ICollection<Player> Players { get; set; }
+
+        public ICollection<TeamManager> TeamsManagers { get; set; }
 
     }
 }

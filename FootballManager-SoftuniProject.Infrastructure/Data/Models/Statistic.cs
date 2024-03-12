@@ -20,12 +20,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
         public int Assists { get; set; }
 
         [Required]
-        public int YellowCards { get; set; }
-
-        [Required]
-        public int RedCards { get; set;}
-
-        [Required]
         public int MatchId { get; set; }
         [ForeignKey(nameof(MatchId))]
         public Match Match { get; set; } = null!;
@@ -34,5 +28,10 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
         public int PlayerId { get; set; }
         [ForeignKey(nameof(PlayerId))]
         public Player Player { get; set; } = null!;
+
+        [Required]
+        public int TeamId { get; set; }
+        [ForeignKey(nameof(TeamId))]
+        public Team Team { get; set; } = null!;
     }
 }

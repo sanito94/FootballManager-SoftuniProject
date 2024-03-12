@@ -1,4 +1,5 @@
 ﻿using FootballManager_SoftuniProject.Infrastructure.Data.Models;
+using FootballManager_SoftuniProject.Infrastructure.Data.Seed;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
@@ -12,42 +13,44 @@ namespace FootballManager_SoftuniProject.Data
         {
         }
 
-        public DbSet<League> Leagues { get; set; } = null!;
         public DbSet<Manager> Managers { get; set; } = null!;
         public DbSet<Match> Matches { get; set; } = null!;
         public DbSet<Player> Players { get; set; } = null!;
         public DbSet<Stadium> Stadiums { get; set; } = null!;
         public DbSet<Statistic> Statistics { get; set; } = null!;
         public DbSet<Team> Teams { get; set; } = null!;
-        public DbSet<TeamPlayer> TeamsPlayers { get; set; } = null!;
+        public DbSet<TeamManager> TeamsManagers { get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            
+            //builder.ApplyConfiguration(new UserConfiguration());
+            //builder.ApplyConfiguration(new PlayerConfiguration());
 
-            builder.Entity<TeamPlayer>()
-                .HasOne(p => p.Player)
-                .WithMany()
-                .HasForeignKey(p => p.PlayerId)
-                .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Entity<Manager>()
-                .HasOne(t => t.Team)
-                .WithMany()
-                .HasForeignKey(t => t.TeamId)
-                .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Entity<Stadium>()
-                .HasOne(t => t.Team)
-                .WithMany()
-                .HasForeignKey(t => t.TeamId)
-                .OnDelete(DeleteBehavior.NoAction);
+            //builder.Entity<Manager>()
+            //    .HasOne(t => t.Team)
+            //    .WithMany()
+            //    .HasForeignKey(t => t.TeamId)
+            //    .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Entity<TeamPlayer>()
-                .HasKey(k => new { k.PlayerId, k.TeamId });
+            //builder.Entity<TeamStadium>()
+            //    .HasOne(t => t.Team)
+            //    .WithMany()
+            //    .HasForeignKey(t => t.TeamId)
+            //    .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<TeamManager>()
+                .HasKey(k => new { k.ManagerId, k.TeamId });
 
             base.OnModelCreating(builder);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+
+            base.OnConfiguring(optionsBuilder);
         }
     }
 }

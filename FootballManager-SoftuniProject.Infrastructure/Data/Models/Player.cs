@@ -10,10 +10,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
 {
     public class Player
     {
-        public Player()
-        {
-            Statistics = new List<Statistic>();
-        }
 
         [Key]
         public int Id { get; set; }
@@ -34,7 +30,5 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
         public int TeamId { get; set; }
         [ForeignKey(nameof(TeamId))] 
         public Team Team { get; set; } = null!;
-
-        public ICollection<Statistic> Statistics { get; set; }
     }
 }

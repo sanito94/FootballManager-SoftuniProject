@@ -14,24 +14,20 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
         public int Id { get; set; }
 
         [Required]
-        public int Goals { get; set; }
+        public int TotalGoals { get; set; }
 
         [Required]
-        public int Assists { get; set; }
+        public int TotalAssists { get; set; }
+
+        [Required]
+        public int TotalYellowCards { get; set; }
+
+        [Required]
+        public int TotalRedCards { get; set; }
 
         [Required]
         public int MatchId { get; set; }
         [ForeignKey(nameof(MatchId))]
         public Match Match { get; set; } = null!;
-
-        [Required]
-        public int PlayerId { get; set; }
-        [ForeignKey(nameof(PlayerId))]
-        public Player Player { get; set; } = null!;
-
-        [Required]
-        public int TeamId { get; set; }
-        [ForeignKey(nameof(TeamId))]
-        public Team Team { get; set; } = null!;
     }
 }

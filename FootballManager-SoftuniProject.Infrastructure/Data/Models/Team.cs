@@ -28,6 +28,8 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
         [MaxLength(TeamCountryMaxLenght)]
         public string Country { get; set; } = null!;
 
+        public string? ImageUrl { get; set; }
+
         [Required]
         public int StadiumId { get; set; }
         [ForeignKey(nameof(StadiumId))]

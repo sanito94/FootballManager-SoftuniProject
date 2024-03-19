@@ -1,0 +1,29 @@
+﻿@model IEnumerable<AllTeamsViewModels>
+@{
+    ViewBag.Title = "Please choose a Team";
+}
+
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="text-center row">
+
+    @foreach (var e in Model)
+    {
+                <div class="card col-4" style="width: 20rem; ">
+                    <div class="card-body">
+                        <h4 class="card-title mt-1">@e.Name</h4>
+                            <img class="d-block w-100" style="height:300px"
+                 src="@e.ImageUrl">
+                    </div>
+
+                        <a asp-controller="Team" asp-action="ChooseTeam" asp-route-id="@e.Id" class="btn btn-info mb-2 w-100 p-3 fw-bold">More Details</a>
+                            <a asp-controller="Team" asp-action="ChooseTeam" asp-route-id="@e.Id" class="btn btn-success mb-2 w-100 p-3 fw-bold">Choose</a>
+                </div>
+    }
+</div>
+
+@section Scripts {
+            <partial name="_ValidationScriptsPartial" />
+}

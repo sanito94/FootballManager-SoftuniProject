@@ -20,7 +20,7 @@ namespace FootballManager_SoftuniProject.Data
         public DbSet<Statistic> Statistics { get; set; } = null!;
         public DbSet<Team> Teams { get; set; } = null!;
         public DbSet<TeamManager> TeamsManagers { get; set; } = null!;
-
+        public DbSet<League> League { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

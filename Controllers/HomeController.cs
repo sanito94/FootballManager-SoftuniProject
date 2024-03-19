@@ -15,11 +15,11 @@ namespace FootballManager_SoftuniProject.Controllers
 
         public IActionResult Index()
         {
-            return View();
-        }
+            if (User?.Identities != null && User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("ChooseLeague", "League");
+            }
 
-        public IActionResult Privacy()
-        {
             return View();
         }
 

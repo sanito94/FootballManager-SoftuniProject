@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -29,7 +30,10 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
         public string Nationality { get; set; } = null!;
 
         [Required]
-        public int YearsOfExperience { get; set; }
+        public string UserId { get; set; } = null!;
+        [Required]
+        [ForeignKey(nameof(UserId))]
+        public IdentityUser User { get; set; } = null!;
 
         public ICollection<Player> Players { get; set; }
 

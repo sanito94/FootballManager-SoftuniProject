@@ -1,6 +1,8 @@
 ﻿using FootballManager_SoftuniProject.Core.Contracts.League;
+using FootballManager_SoftuniProject.Core.Contracts.Manager;
 using FootballManager_SoftuniProject.Core.Contracts.Team;
 using FootballManager_SoftuniProject.Core.Services.League;
+using FootballManager_SoftuniProject.Core.Services.Manager;
 using FootballManager_SoftuniProject.Core.Services.Team;
 using FootballManager_SoftuniProject.Data;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +16,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddScoped<ILeagueService, LeagueService>();
             services.AddScoped<ITeamService, TeamService>();
+            services.AddScoped<IManagerService, ManagerService>();
 
             return services;
         }

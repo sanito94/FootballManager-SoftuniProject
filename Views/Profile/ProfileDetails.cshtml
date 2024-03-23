@@ -15,7 +15,7 @@
             <p class="mb-0"><span class="fw-bold">Your Team: </span>@Model.TeamName</p>
         </div>
 
-        <a asp-controller="Transfer" asp-action="GoToTransfer" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Go to Transfer Market</a>
+        <a asp-controller="TransferMarketPlayer" asp-action="AllPlayers" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Go to Transfer Market</a>
         @*@if (User?.Identity?.Name == Model.LoginId)
         {
                 <a asp-controller="Seminar" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Edit</a>

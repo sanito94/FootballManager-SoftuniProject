@@ -11,10 +11,10 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
 {
     public class Manager
     {
+
         public Manager()
         {
             Players = new List<Player>();
-            TeamsManagers = new List<TeamManager>();
         }
 
         [Key]
@@ -35,8 +35,14 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
         [ForeignKey(nameof(UserId))]
         public IdentityUser User { get; set; } = null!;
 
-        public ICollection<Player> Players { get; set; }
+        public double StartingGold { get; set; }
 
-        public ICollection<TeamManager> TeamsManagers { get; set; }
+        [Required]
+        public int TeamId { get; set; }
+        [Required]
+        [ForeignKey(nameof(TeamId))]
+        public Team Team { get; set; } = null!;
+
+        public ICollection<Player> Players { get; set; }
     }
 }

@@ -8,12 +8,10 @@ namespace FootballManager_SoftuniProject.Controllers
     public class TeamController : Controller
     {
         public readonly ITeamService teamService;
-        public readonly FootballManagerDbContext context;
 
-        public TeamController(ITeamService _teamService, FootballManagerDbContext context)
+        public TeamController(ITeamService _teamService)
         {
             teamService = _teamService;
-            this.context = context;
         }
 
         public async Task<IActionResult> ChooseTeam(int id)

@@ -31,5 +31,11 @@ namespace FootballManager_SoftuniProject.Core.Services.League
                 })
                 .ToListAsync();
         }
+
+        public async Task<bool> ExistsById(string userId)
+        {
+            return await context.Managers
+                .AnyAsync(x => x.UserId == userId);
+        }
     }
 }

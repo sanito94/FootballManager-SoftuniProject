@@ -1,0 +1,28 @@
+﻿@model ProfileDetailsViewModel
+@{
+    ViewBag.Title = "Seminar Details";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+    <div class="card w-50">
+        <div class="card-body">
+            <h3 class="card-title text-center">Your Profile:</h3>
+            <p class="mb-0"><span class="fw-bold">Your Gold: </span>@Model.StartGold</p>
+            <p class="mb-0"><span class="fw-bold">Manager Name: </span>@Model.ManagerName</p>
+            <p class="mb-0"><span class="fw-bold">Your Team: </span>@Model.TeamName</p>
+        </div>
+
+        <a asp-controller="Transfer" asp-action="GoToTransfer" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Add to Transfer Market</a>
+        @if (User?.Identity?.Name != Model.LoginId)
+        {
+                <a asp-controller="Seminar" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Buy</a>
+        }
+
+    </div>
+</div>
+@section Scripts {
+            <partial name="_ValidationScriptsPartial" />
+}

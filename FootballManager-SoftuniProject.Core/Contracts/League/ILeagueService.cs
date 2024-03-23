@@ -10,5 +10,7 @@ namespace FootballManager_SoftuniProject.Core.Contracts.League
     public interface ILeagueService
     {
         Task<IEnumerable<AllLeaguesViewModel>> AllLeagues();
+
+        Task<bool> ExistsById(string userId);
     }
 }

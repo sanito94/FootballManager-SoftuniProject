@@ -20,20 +20,15 @@ namespace FootballManager_SoftuniProject.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> CreateManager()
+        public async Task<IActionResult> CreateManager(int id)
         {
-            if (await managerService.ExistsById(User.Id()))
-            {
-                return BadRequest();
-            }
-
             var model = new CreateManagerViewModel();
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateManager(CreateManagerViewModel model)
+        public async Task<IActionResult> CreateManager(CreateManagerViewModel model, int id)
         {
             var manager = new Manager()
             {
@@ -41,20 +36,14 @@ namespace FootballManager_SoftuniProject.Controllers
                 Age = model.Age,
                 Nationality = model.Nationality,
                 UserId = GetUserId(),
+                TeamId = id,
+                StartingGold = model.StartingGold,
             };
 
             await context.Managers.AddAsync(manager);
             await context.SaveChangesAsync();
 
-            return RedirectToAction("ChooseLeague", "League");
-
-            
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> ManagerCreated()
-        {
-            return View();
+            return RedirectToAction("ProfileDetails", "Profile");
         }
 
 

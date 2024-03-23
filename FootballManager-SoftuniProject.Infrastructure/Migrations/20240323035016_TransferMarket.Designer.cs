@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FootballManager_SoftuniProject.Infrastructure.Migrations
 {
     [DbContext(typeof(FootballManagerDbContext))]
-    [Migration("20240321124933_Manager")]
-    partial class Manager
+    [Migration("20240323035016_TransferMarket")]
+    partial class TransferMarket
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,7 +64,21 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("StartingGold")
+                        .HasColumnType("float");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TeamId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Managers");
                 });
@@ -136,6 +150,41 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                     b.HasIndex("TeamId");
 
                     b.ToTable("Players");
+                });
+
+            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Profile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ManagerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("StartGold")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TransferMarketId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ManagerId");
+
+                    b.HasIndex("TeamId");
+
+                    b.HasIndex("TransferMarketId");
+
+                    b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Stadium", b =>
@@ -224,19 +273,45 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                     b.ToTable("Teams");
                 });
 
-            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TeamManager", b =>
+            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TranferMarketPlayer", b =>
                 {
-                    b.Property<int>("ManagerId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("TeamId")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.HasKey("ManagerId", "TeamId");
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("TeamId");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("TeamsManagers");
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TranferMarketPlayers");
+                });
+
+            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TransferMarket", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TransferMarket");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -441,6 +516,25 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Manager", b =>
+                {
+                    b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Team", "Team")
+                        .WithMany("Managers")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Team");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Match", b =>
                 {
                     b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Stadium", "Stadium")
@@ -463,6 +557,29 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Profile", b =>
+                {
+                    b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Manager", "Manager")
+                        .WithMany()
+                        .HasForeignKey("ManagerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Team", "Team")
+                        .WithMany()
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.TransferMarket", null)
+                        .WithMany("Profiles")
+                        .HasForeignKey("TransferMarketId");
+
+                    b.Navigation("Manager");
 
                     b.Navigation("Team");
                 });
@@ -495,25 +612,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                     b.Navigation("League");
 
                     b.Navigation("Stadium");
-                });
-
-            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TeamManager", b =>
-                {
-                    b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Manager", "Manager")
-                        .WithMany("TeamsManagers")
-                        .HasForeignKey("ManagerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Team", "Team")
-                        .WithMany("TeamsManagers")
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Manager");
-
-                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -575,8 +673,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
             modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Manager", b =>
                 {
                     b.Navigation("Players");
-
-                    b.Navigation("TeamsManagers");
                 });
 
             modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Match", b =>
@@ -593,9 +689,14 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
 
             modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Team", b =>
                 {
-                    b.Navigation("Players");
+                    b.Navigation("Managers");
 
-                    b.Navigation("TeamsManagers");
+                    b.Navigation("Players");
+                });
+
+            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TransferMarket", b =>
+                {
+                    b.Navigation("Profiles");
                 });
 #pragma warning restore 612, 618
         }

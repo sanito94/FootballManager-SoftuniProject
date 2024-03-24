@@ -4,6 +4,7 @@ using FootballManager_SoftuniProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FootballManager_SoftuniProject.Infrastructure.Migrations
 {
     [DbContext(typeof(FootballManagerDbContext))]
-    partial class FootballManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240324041037_SeedAdmin")]
+    partial class SeedAdmin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -382,15 +384,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "f6d58fdb-210d-4326-bf20-85e656f184bb",
-                            ConcurrencyStamp = "6853224a-a667-489d-b442-aaac8de72029",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -487,15 +480,15 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b0fb003a-e91b-438d-9b45-6c85b84727e1",
+                            ConcurrencyStamp = "4d7047d3-a832-4e98-8677-fde0dc54d3ee",
                             Email = "admin@test.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@test.com",
                             NormalizedUserName = "admin@test.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEA2E0lg1I4F8iONg56538LsBbTooYXGkz/7xmXweY+DXxSqu9L8DpjFf5B1G8v7SlA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEG1ykpenoLZ98RCrL3s+9CKmv2L/AudwpcwGlZxX6VgJxmi8ERPQsnqnkaPV3Z9dmA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e12eafa2-92ec-4498-ab9f-52f4883379ad",
+                            SecurityStamp = "1af500eb-6aa6-4b1e-942a-c4507c75246a",
                             TwoFactorEnabled = false,
                             UserName = "admin@test.com"
                         },
@@ -503,15 +496,15 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b2dc86eb-7cae-4213-b62e-19faf99db17e",
+                            ConcurrencyStamp = "6e965e5f-f6db-4b68-8ecb-ec3a1784cd3a",
                             Email = "guest@mail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@mail.com",
                             NormalizedUserName = "guest@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFpl+/ouSrNWN0X/XZGT93r8ltJmeAWQ4V7ejWzUHtbZT3A8XQm2RlghkVco0UdH1A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPZV6+A5YLk0YPqka/azHBCvVD+3858xvaVYxzcj75Rou2kVbLUqyMnFKR22kSzLxQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c4f0aa7e-3558-491c-a84c-f9664d88b92e",
+                            SecurityStamp = "9082a464-b0eb-4ce4-82c2-a0b9b7af0303",
                             TwoFactorEnabled = false,
                             UserName = "guest@mail.com"
                         });

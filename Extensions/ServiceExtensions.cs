@@ -41,6 +41,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     options.Password.RequireDigit = false;
                     options.Password.RequireUppercase = false;
                 })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<FootballManagerDbContext>();
 
             return services;

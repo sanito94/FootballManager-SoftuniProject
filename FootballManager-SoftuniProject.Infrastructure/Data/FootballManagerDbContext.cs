@@ -13,7 +13,6 @@ namespace FootballManager_SoftuniProject.Data
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new LeagueConfiguration());
             builder.ApplyConfiguration(new StadiumConfiguration());
             builder.ApplyConfiguration(new TeamConfiguration());

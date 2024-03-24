@@ -10,53 +10,21 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models.Seed
 {
     public class SeedData
     {
-        public IdentityUser Admin { get; set; } = null!;
-
-        public IdentityUser User { get; set; } = null!;
-
         public League PremierLeague { get; set; } = null!;
         public League LaLiga { get; set; } = null!;
 
         public Stadium SantiagoBernabeu { get; set; } = null!;
+
         public Team RealMadrid { get; set; } = null!;
 
 
         public SeedData()
         {
-            SeedUsers();
             SeedLeagues();
             SeedStadiums();
             SeedTeams();
         }
 
-        private void SeedUsers()
-        {
-            var hasher = new PasswordHasher<IdentityUser>();
-
-            Admin = new IdentityUser()
-            {
-                Id = "dea12856-c198-4129-b3f3-b893d8395082",
-                UserName = "agent@mail.com",
-                NormalizedUserName = "agent@mail.com",
-                Email = "agent@mail.com",
-                NormalizedEmail = "agent@mail.com"
-            };
-
-            Admin.PasswordHash =
-                 hasher.HashPassword(Admin, "agent123");
-
-            User = new IdentityUser()
-            {
-                Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
-                UserName = "guest@mail.com",
-                NormalizedUserName = "guest@mail.com",
-                Email = "guest@mail.com",
-                NormalizedEmail = "guest@mail.com"
-            };
-
-            User.PasswordHash =
-            hasher.HashPassword(User, "guest123");
-        }
 
         private void SeedLeagues()
         {

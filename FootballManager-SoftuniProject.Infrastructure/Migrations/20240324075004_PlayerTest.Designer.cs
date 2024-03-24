@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FootballManager_SoftuniProject.Infrastructure.Migrations
 {
     [DbContext(typeof(FootballManagerDbContext))]
-    [Migration("20240324044533_RolesAdminAdd")]
-    partial class RolesAdminAdd
+    [Migration("20240324075004_PlayerTest")]
+    partial class PlayerTest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -154,7 +154,11 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TeamId")
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("TeamId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -334,6 +338,10 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FromUser")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -347,10 +355,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
 
                     b.Property<int?>("TransferMarketId")
                         .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -384,15 +388,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "f6d58fdb-210d-4326-bf20-85e656f184bb",
-                            ConcurrencyStamp = "6853224a-a667-489d-b442-aaac8de72029",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -483,40 +478,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "dea12856-c198-4129-b3f3-b893d8395082",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "b0fb003a-e91b-438d-9b45-6c85b84727e1",
-                            Email = "admin@test.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "admin@test.com",
-                            NormalizedUserName = "admin@test.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEA2E0lg1I4F8iONg56538LsBbTooYXGkz/7xmXweY+DXxSqu9L8DpjFf5B1G8v7SlA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "e12eafa2-92ec-4498-ab9f-52f4883379ad",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@test.com"
-                        },
-                        new
-                        {
-                            Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "b2dc86eb-7cae-4213-b62e-19faf99db17e",
-                            Email = "guest@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "guest@mail.com",
-                            NormalizedUserName = "guest@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFpl+/ouSrNWN0X/XZGT93r8ltJmeAWQ4V7ejWzUHtbZT3A8XQm2RlghkVco0UdH1A==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "c4f0aa7e-3558-491c-a84c-f9664d88b92e",
-                            TwoFactorEnabled = false,
-                            UserName = "guest@mail.com"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>

@@ -1,18 +1,17 @@
-﻿using FootballManager_SoftuniProject.Core.Models.TransferMarketPlayer;
+﻿using FootballManager_SoftuniProject.Core.Models.Player;
+using FootballManager_SoftuniProject.Core.Models.TransferMarketPlayer;
 using FootballManager_SoftuniProject.Data;
 using FootballManager_SoftuniProject.Infrastructure.Data.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace FootballManager_SoftuniProject.Controllers
 {
-    public class TransferMarketPlayerController : Controller
+    public class PlayerController : Controller
     {
         private readonly FootballManagerDbContext context;
 
-        public TransferMarketPlayerController(FootballManagerDbContext _context)
+        public PlayerController(FootballManagerDbContext _context)
         {
             context = _context;
         }
@@ -20,9 +19,9 @@ namespace FootballManager_SoftuniProject.Controllers
         [HttpGet]
         public async Task<IActionResult> AllPlayers()
         {
-            var model = await context.TranferMarketPlayers
+            var model = await context.Players
                 .AsNoTracking()
-                .Select(p=> new TransferMarketPlayerViewModel()
+                .Select(p => new PlayerViewModel()
                 {
                     Id = p.Id,
                     Name = p.Name,
@@ -30,7 +29,6 @@ namespace FootballManager_SoftuniProject.Controllers
                     Country = p.Country,
                     Position = p.Position,
                     Price = p.Price,
-                    UserId = GetUserId()
                 })
                 .ToListAsync();
 
@@ -40,36 +38,31 @@ namespace FootballManager_SoftuniProject.Controllers
         [HttpGet]
         public async Task<IActionResult> AddPlayer()
         {
-            var model = new TransferMarketPlayerViewModel();
+            var model = new PlayerViewModel();
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPlayer(TransferMarketPlayerViewModel model)
+        public async Task<IActionResult> AddPlayer(PlayerViewModel model)
         {
 
-            var playerr = new TransferMarketPlayer()
+            var player = new Player()
             {
                 Id = model.Id,
                 Name = model.Name,
                 Age = model.Age,
                 Country = model.Country,
-                FromUser = GetUserId(),
                 Position = model.Position,
                 Price = model.Price,
+                TeamId = 1,
+                ManagerId = 6
             };
 
-            await context.TranferMarketPlayers.AddAsync(playerr);
+            await context.Players.AddAsync(player);
             await context.SaveChangesAsync();
 
             return RedirectToAction(nameof(AllPlayers));
-        }
-
-
-        private string GetUserId()
-        {
-            return User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
         }
     }
 }

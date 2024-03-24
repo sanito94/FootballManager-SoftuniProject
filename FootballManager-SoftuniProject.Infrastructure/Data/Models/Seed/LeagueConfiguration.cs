@@ -20,7 +20,8 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models.Seed
             builder.HasData(new League[]
             {
                 data.PremierLeague,
-                data.LaLiga
+                data.LaLiga,
+                data.AdminLeague
             });
         }
     }

@@ -43,7 +43,7 @@ namespace FootballManager_SoftuniProject.Controllers
             await context.Managers.AddAsync(manager);
             await context.SaveChangesAsync();
 
-            return RedirectToAction("ProfileDetails", "Profile");
+            return RedirectToAction("AllPlayers", "Player");
         }
 
 

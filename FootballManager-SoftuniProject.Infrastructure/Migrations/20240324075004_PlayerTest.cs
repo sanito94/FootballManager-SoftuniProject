@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FootballManager_SoftuniProject.Infrastructure.Migrations
 {
-    public partial class TransferMarket : Migration
+    public partial class PlayerTest : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -74,22 +74,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Stadiums", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TranferMarketPlayers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Position = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TranferMarketPlayers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -263,6 +247,30 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TranferMarketPlayers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Position = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    FromUser = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TransferMarketId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TranferMarketPlayers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TranferMarketPlayers_TransferMarket_TransferMarketId",
+                        column: x => x.TransferMarketId,
+                        principalTable: "TransferMarket",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Statistics",
                 columns: table => new
                 {
@@ -325,6 +333,7 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                     Age = table.Column<int>(type: "int", nullable: false),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Position = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TeamId = table.Column<int>(type: "int", nullable: false),
                     ManagerId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -377,6 +386,26 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         principalTable: "TransferMarket",
                         principalColumn: "Id");
                 });
+
+            migrationBuilder.InsertData(
+                table: "League",
+                columns: new[] { "Id", "ImageUrl", "Name" },
+                values: new object[] { 2, "https://b.fssta.com/uploads/application/soccer/competition-logos/EnglishPremierLeague.png", "Premier League" });
+
+            migrationBuilder.InsertData(
+                table: "League",
+                columns: new[] { "Id", "ImageUrl", "Name" },
+                values: new object[] { 3, "https://upload.wikimedia.org/wikipedia/fr/2/23/Logo_La_Liga.png", "LaLiga" });
+
+            migrationBuilder.InsertData(
+                table: "Stadiums",
+                columns: new[] { "Id", "Capacity", "Name" },
+                values: new object[] { 2, 80000, "Santiago Bernabeu" });
+
+            migrationBuilder.InsertData(
+                table: "Teams",
+                columns: new[] { "Id", "Country", "ImageUrl", "LeagueId", "Name", "StadiumId" },
+                values: new object[] { 2, "Spain", "https://banner2.cleanpng.com/20180602/psw/kisspng-real-madrid-c-f-uefa-champions-league-la-liga-juv-5b1351b072b362.2456057615279927524698.jpg", 3, "Real Madrid", 2 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -471,6 +500,11 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                 name: "IX_Teams_StadiumId",
                 table: "Teams",
                 column: "StadiumId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TranferMarketPlayers_TransferMarketId",
+                table: "TranferMarketPlayers",
+                column: "TransferMarketId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -509,10 +543,10 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                 name: "Managers");
 
             migrationBuilder.DropTable(
-                name: "TransferMarket");
+                name: "Matches");
 
             migrationBuilder.DropTable(
-                name: "Matches");
+                name: "TransferMarket");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

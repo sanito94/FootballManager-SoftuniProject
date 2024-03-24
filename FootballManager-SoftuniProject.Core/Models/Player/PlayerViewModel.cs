@@ -6,31 +6,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
+namespace FootballManager_SoftuniProject.Core.Models.Player
 {
-    public class TransferMarketPlayer
+    public class PlayerViewModel
     {
-        [Key]
         public int Id { get; set; }
 
-        [Required]
         public string Name { get; set; } = null!;
 
-        [Required]
         public int Age { get; set; }
 
-        [Required]
         public string Country { get; set; } = null!;
 
-        [Required]
         public string Position { get; set; } = null!;
 
-        [Required]
         public decimal Price { get; set; }
 
-        [Required]
-        public string FromUser { get; set; } = null!;
-
-        
+        public int? TeamId { get; set; }
     }
 }

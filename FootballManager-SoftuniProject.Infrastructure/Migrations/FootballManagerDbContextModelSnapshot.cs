@@ -54,6 +54,12 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                             Id = 3,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/fr/2/23/Logo_La_Liga.png",
                             Name = "LaLiga"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            ImageUrl = "https://c8.alamy.com/comp/2H36T4F/three-persons-admin-icon-outline-three-persons-admin-vector-icon-color-flat-isolated-2H36T4F.jpg",
+                            Name = "Admin"
                         });
                 });
 
@@ -141,7 +147,7 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ManagerId")
+                    b.Property<int>("ManagerId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -151,6 +157,9 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                     b.Property<string>("Position")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("TeamId")
                         .HasColumnType("int");
@@ -224,6 +233,12 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                             Id = 2,
                             Capacity = 80000,
                             Name = "Santiago Bernabeu"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Capacity = 100000,
+                            Name = "Admin"
                         });
                 });
 
@@ -301,6 +316,15 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                             LeagueId = 3,
                             Name = "Real Madrid",
                             StadiumId = 2
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Country = "Bulgaria",
+                            ImageUrl = "https://c8.alamy.com/comp/2H36T4F/three-persons-admin-icon-outline-three-persons-admin-vector-icon-color-flat-isolated-2H36T4F.jpg",
+                            LeagueId = 1,
+                            Name = "Admin",
+                            StadiumId = 1
                         });
                 });
 
@@ -332,6 +356,10 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FromUser")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -345,10 +373,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
 
                     b.Property<int?>("TransferMarketId")
                         .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -382,15 +406,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "f6d58fdb-210d-4326-bf20-85e656f184bb",
-                            ConcurrencyStamp = "6853224a-a667-489d-b442-aaac8de72029",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -481,40 +496,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "dea12856-c198-4129-b3f3-b893d8395082",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "b0fb003a-e91b-438d-9b45-6c85b84727e1",
-                            Email = "admin@test.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "admin@test.com",
-                            NormalizedUserName = "admin@test.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEA2E0lg1I4F8iONg56538LsBbTooYXGkz/7xmXweY+DXxSqu9L8DpjFf5B1G8v7SlA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "e12eafa2-92ec-4498-ab9f-52f4883379ad",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@test.com"
-                        },
-                        new
-                        {
-                            Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "b2dc86eb-7cae-4213-b62e-19faf99db17e",
-                            Email = "guest@mail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "guest@mail.com",
-                            NormalizedUserName = "guest@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFpl+/ouSrNWN0X/XZGT93r8ltJmeAWQ4V7ejWzUHtbZT3A8XQm2RlghkVco0UdH1A==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "c4f0aa7e-3558-491c-a84c-f9664d88b92e",
-                            TwoFactorEnabled = false,
-                            UserName = "guest@mail.com"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -634,15 +615,19 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
 
             modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Player", b =>
                 {
-                    b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Manager", null)
+                    b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Manager", "Manager")
                         .WithMany("Players")
-                        .HasForeignKey("ManagerId");
+                        .HasForeignKey("ManagerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Team", "Team")
                         .WithMany("Players")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Manager");
 
                     b.Navigation("Team");
                 });

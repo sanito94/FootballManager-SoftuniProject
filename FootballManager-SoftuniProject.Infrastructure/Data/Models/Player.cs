@@ -27,8 +27,16 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
         public string Position { get; set; } = null!;
 
         [Required]
+        public decimal Price { get; set; }
+
+        [Required]
         public int TeamId { get; set; }
-        [ForeignKey(nameof(TeamId))] 
+        [ForeignKey(nameof(TeamId))]
         public Team Team { get; set; } = null!;
+
+        [Required]
+        public int ManagerId { get; set; }
+        [ForeignKey(nameof(ManagerId))]
+        public Manager Manager { get; set; } = null!;
     }
 }

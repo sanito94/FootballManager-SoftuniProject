@@ -18,6 +18,12 @@
                         <p class="mb-0"><span class="fw-bold">Age: </span>@p.Age</p>
                         <p class="mb-0"><span class="fw-bold">Position: </span>@p.Position</p>
                         <p class="mb-0"><span class="fw-bold">Price: </span>@p.Price</p>
+
+                        @foreach (var manager in p.Managers)
+                        {
+                                    <p class="mb-0"><span class="fw-bold">Manager Name: </span>@manager.Name</p>
+                        }
+
                     </div>
 
                     <a asp-controller="Seminar" asp-action="Details" asp-route-id="@p.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Details</a>

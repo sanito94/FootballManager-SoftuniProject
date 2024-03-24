@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<AllLeaguesViewModel>
 @{
     ViewBag.Title = "Please choose a league";
+    string[] leagues = new[] { "Premier League", "LaLiga" };
 }
 
 
@@ -8,19 +9,35 @@
 <hr />
 
 <div class="text-center row">
-
-    @foreach (var e in Model)
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
     {
-            <div class="card col-4" style="width: 20rem; ">
-                <div class="card-body">
-                    <h4 class="card-title mt-1">@e.Name</h4>
-                        <img class="d-block w-100" style="height:300px"
-                 src="@e.ImageUrl">
-                </div>
+        @foreach (var l in Model.Where(l=>l.Name == "Admin"))
+        {
+                    <div class="card col-4" style="width: 20rem; ">
+                                    <div class="card-body">
+                                        <h4 class="card-title mt-1">@l.Name</h4>
+                                            <img class="d-block w-100" style="height:300px" src="@l.ImageUrl">
+                                    </div>
+                                            <a asp-controller="Team" asp-action="ChooseTeam" asp-route-id="@l.Id" class="btn btn-success mb-2 w-100 p-3 fw-bold">Choose</a>
+                                </div>
 
-                        <a asp-controller="Team" asp-action="ChooseTeam" asp-route-id="@e.Id" class="btn btn-success mb-2 w-100 p-3 fw-bold">Choose</a>
-            </div>
+        }
     }
+    else
+    {
+        @foreach (var l in Model.Where(l=>l.Id != 1))
+        {
+                    <div class="card col-4" style="width: 20rem; ">
+                                    <div class="card-body">
+                                        <h4 class="card-title mt-1">@l.Name</h4>
+                                            <img class="d-block w-100" style="height:300px" src="@l.ImageUrl">
+                                    </div>
+                                            <a asp-controller="Team" asp-action="ChooseTeam" asp-route-id="@l.Id" class="btn btn-success mb-2 w-100 p-3 fw-bold">Choose</a>
+                                </div>
+
+        }
+    }
+
 </div>
 
 @section Scripts {

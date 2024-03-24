@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FootballManager_SoftuniProject.Infrastructure.Migrations
 {
     [DbContext(typeof(FootballManagerDbContext))]
-    [Migration("20240324075004_PlayerTest")]
-    partial class PlayerTest
+    [Migration("20240324135942_PlayerRandom")]
+    partial class PlayerRandom
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,6 +56,12 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                             Id = 3,
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/fr/2/23/Logo_La_Liga.png",
                             Name = "LaLiga"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            ImageUrl = "https://c8.alamy.com/comp/2H36T4F/three-persons-admin-icon-outline-three-persons-admin-vector-icon-color-flat-isolated-2H36T4F.jpg",
+                            Name = "Admin"
                         });
                 });
 
@@ -143,7 +149,7 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ManagerId")
+                    b.Property<int>("ManagerId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -157,8 +163,7 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("TeamId")
-                        .IsRequired()
+                    b.Property<int>("TeamId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -230,6 +235,12 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                             Id = 2,
                             Capacity = 80000,
                             Name = "Santiago Bernabeu"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Capacity = 100000,
+                            Name = "Admin"
                         });
                 });
 
@@ -307,6 +318,15 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                             LeagueId = 3,
                             Name = "Real Madrid",
                             StadiumId = 2
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Country = "Bulgaria",
+                            ImageUrl = "https://c8.alamy.com/comp/2H36T4F/three-persons-admin-icon-outline-three-persons-admin-vector-icon-color-flat-isolated-2H36T4F.jpg",
+                            LeagueId = 1,
+                            Name = "Admin",
+                            StadiumId = 1
                         });
                 });
 
@@ -597,15 +617,19 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
 
             modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Player", b =>
                 {
-                    b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Manager", null)
+                    b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Manager", "Manager")
                         .WithMany("Players")
-                        .HasForeignKey("ManagerId");
+                        .HasForeignKey("ManagerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Team", "Team")
                         .WithMany("Players")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Manager");
 
                     b.Navigation("Team");
                 });

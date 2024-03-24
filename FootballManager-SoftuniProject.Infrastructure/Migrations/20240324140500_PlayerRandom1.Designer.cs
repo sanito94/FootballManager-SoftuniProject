@@ -4,6 +4,7 @@ using FootballManager_SoftuniProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FootballManager_SoftuniProject.Infrastructure.Migrations
 {
     [DbContext(typeof(FootballManagerDbContext))]
-    partial class FootballManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240324140500_PlayerRandom1")]
+    partial class PlayerRandom1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -175,13 +177,13 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 10,
-                            Age = 17,
-                            Country = "Italy",
+                            Id = 999,
+                            Age = 16,
+                            Country = "Germany",
                             ManagerId = 6,
-                            Name = "George Paul",
-                            Position = "CB",
-                            Price = 100m,
+                            Name = "Pesho",
+                            Position = "CM",
+                            Price = 300m,
                             TeamId = 1
                         });
                 });

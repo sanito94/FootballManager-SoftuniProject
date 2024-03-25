@@ -31,6 +31,7 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
         [Required]
         public string FromUser { get; set; } = null!;
 
-        
+        [Required]
+        public int PlayerId { get; set; }
     }
 }

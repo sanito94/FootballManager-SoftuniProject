@@ -29,6 +29,9 @@ namespace FootballManager_SoftuniProject.Core.Models.TransferMarketPlayer
 
         public string Position { get; set; } = null!;
 
+        public int PlayerId { get; set; }
+
+
         public ICollection<CreateManagerViewModel> Managers { get; set; }
     }
 }

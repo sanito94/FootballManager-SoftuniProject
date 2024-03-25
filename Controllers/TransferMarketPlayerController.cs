@@ -30,7 +30,7 @@ namespace FootballManager_SoftuniProject.Controllers
                     Country = p.Country,
                     Position = p.Position,
                     Price = p.Price,
-                    UserId = GetUserId()
+                    UserId = GetUserId(),
                 })
                 .ToListAsync();
 
@@ -50,6 +50,7 @@ namespace FootballManager_SoftuniProject.Controllers
                     Position = p.Position,
                     Price = p.Price,
                     UserId = GetUserId(),
+                    PlayerId = id
                 })
                 .FirstOrDefaultAsync();
                 
@@ -60,6 +61,12 @@ namespace FootballManager_SoftuniProject.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPlayer(TransferMarketPlayerViewModel model, int id)
         {
+            var player = await context.TranferMarketPlayers.FirstOrDefaultAsync(p=>p.PlayerId == id);
+
+            if (player != null)
+            {
+                throw new ArgumentException("Sorry but the player already exist in the Market");
+            }
 
             var playerr = new TransferMarketPlayer()
             {
@@ -69,6 +76,7 @@ namespace FootballManager_SoftuniProject.Controllers
                 FromUser = GetUserId(),
                 Position = model.Position,
                 Price = model.Price,
+                PlayerId = id
             };
 
             await context.TranferMarketPlayers.AddAsync(playerr);

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FootballManager_SoftuniProject.Infrastructure.Migrations
 {
     [DbContext(typeof(FootballManagerDbContext))]
-    [Migration("20240325053327_Initial")]
-    partial class Initial
+    [Migration("20240325064216_TransferMarketPlayerUpdated1")]
+    partial class TransferMarketPlayerUpdated1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -202,16 +202,11 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                     b.Property<int>("TeamId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TransferMarketId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ManagerId");
 
                     b.HasIndex("TeamId");
-
-                    b.HasIndex("TransferMarketId");
 
                     b.ToTable("Profiles");
                 });
@@ -336,19 +331,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TransferMarket", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TransferMarket");
-                });
-
             modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TransferMarketPlayer", b =>
                 {
                     b.Property<int>("Id")
@@ -372,6 +354,9 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Position")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -379,12 +364,7 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("TransferMarketId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("TransferMarketId");
 
                     b.ToTable("TranferMarketPlayers");
                 });
@@ -662,10 +642,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.TransferMarket", null)
-                        .WithMany("Profiles")
-                        .HasForeignKey("TransferMarketId");
-
                     b.Navigation("Manager");
 
                     b.Navigation("Team");
@@ -699,13 +675,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                     b.Navigation("League");
 
                     b.Navigation("Stadium");
-                });
-
-            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TransferMarketPlayer", b =>
-                {
-                    b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.TransferMarket", null)
-                        .WithMany("TransferMarketPlayers")
-                        .HasForeignKey("TransferMarketId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -786,13 +755,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                     b.Navigation("Managers");
 
                     b.Navigation("Players");
-                });
-
-            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TransferMarket", b =>
-                {
-                    b.Navigation("Profiles");
-
-                    b.Navigation("TransferMarketPlayers");
                 });
 #pragma warning restore 612, 618
         }

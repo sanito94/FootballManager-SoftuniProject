@@ -38,20 +38,31 @@ namespace FootballManager_SoftuniProject.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddPlayer()
+        public async Task<IActionResult> AddPlayer(int id)
         {
-            var model = new TransferMarketPlayerViewModel();
+            var model = await context.Players.Where(p => p.Id == id)
+                .AsNoTracking()
+                .Select(p => new TransferMarketPlayerViewModel()
+                {
+                    Name = p.Name,
+                    Age = p.Age,
+                    Country = p.Country,
+                    Position = p.Position,
+                    Price = p.Price,
+                    UserId = GetUserId(),
+                })
+                .FirstOrDefaultAsync();
+                
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPlayer(TransferMarketPlayerViewModel model)
+        public async Task<IActionResult> AddPlayer(TransferMarketPlayerViewModel model, int id)
         {
 
             var playerr = new TransferMarketPlayer()
             {
-                Id = model.Id,
                 Name = model.Name,
                 Age = model.Age,
                 Country = model.Country,

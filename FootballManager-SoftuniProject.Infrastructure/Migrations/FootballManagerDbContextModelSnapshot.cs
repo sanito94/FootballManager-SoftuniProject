@@ -164,26 +164,19 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                     b.Property<int>("TeamId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ManagerId");
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Players");
+                    b.HasIndex("UserId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 10,
-                            Age = 17,
-                            Country = "Italy",
-                            ManagerId = 6,
-                            Name = "George Paul",
-                            Position = "CB",
-                            Price = 100m,
-                            TeamId = 1
-                        });
+                    b.ToTable("Players");
                 });
 
             modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Profile", b =>
@@ -640,9 +633,17 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Manager");
 
                     b.Navigation("Team");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Profile", b =>

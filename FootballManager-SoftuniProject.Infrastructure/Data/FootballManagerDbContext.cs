@@ -16,7 +16,6 @@ namespace FootballManager_SoftuniProject.Data
             builder.ApplyConfiguration(new LeagueConfiguration());
             builder.ApplyConfiguration(new StadiumConfiguration());
             builder.ApplyConfiguration(new TeamConfiguration());
-            builder.ApplyConfiguration(new PlayerConfiguration());
 
             base.OnModelCreating(builder);
         }

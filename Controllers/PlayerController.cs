@@ -4,6 +4,7 @@ using FootballManager_SoftuniProject.Data;
 using FootballManager_SoftuniProject.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace FootballManager_SoftuniProject.Controllers
 {
@@ -19,8 +20,11 @@ namespace FootballManager_SoftuniProject.Controllers
         [HttpGet]
         public async Task<IActionResult> AllPlayers()
         {
+            var manager = await context.Managers.FirstOrDefaultAsync(m=>m.UserId == GetUserId());
+
             var model = await context.Players
                 .AsNoTracking()
+                .Where(p=>p.ManagerId == manager.Id)
                 .Select(p => new PlayerViewModel()
                 {
                     Id = p.Id,
@@ -63,6 +67,11 @@ namespace FootballManager_SoftuniProject.Controllers
             await context.SaveChangesAsync();
 
             return RedirectToAction(nameof(AllPlayers));
+        }
+
+        private string GetUserId()
+        {
+            return User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
         }
     }
 }

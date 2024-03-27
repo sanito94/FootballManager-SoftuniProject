@@ -17,7 +17,7 @@ namespace FootballManager_SoftuniProject.Core.Models.Manager
 
         public string Nationality { get; set; } = null!;
 
-        public double StartingGold { get; set; } = 10000;
+        public decimal StartingGold { get; set; } = 10000;
 
     }
 }

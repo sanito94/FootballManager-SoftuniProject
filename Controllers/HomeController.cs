@@ -4,23 +4,13 @@ using System.Diagnostics;
 
 namespace FootballManager_SoftuniProject.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-        }
-
-        public IActionResult Index()
-        {
-            if (User?.Identities != null && User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("ChooseLeague", "League");
-            }
-
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

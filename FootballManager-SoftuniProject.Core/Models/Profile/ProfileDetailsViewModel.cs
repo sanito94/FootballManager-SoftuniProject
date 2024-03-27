@@ -12,7 +12,7 @@ namespace FootballManager_SoftuniProject.Core.Models.Profile
     {
         public int Id { get; set; }
 
-        public double StartGold { get; set; }
+        public decimal StartGold { get; set; }
 
         public string ManagerName { get; set; } = null!;
 

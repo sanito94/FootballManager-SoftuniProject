@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
 {
@@ -28,8 +29,12 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
         [Required]
         public decimal Price { get; set; }
 
+
         [Required]
-        public string FromUser { get; set; } = null!;
+        public string FromUserId { get; set; } = null!;
+        [Required]
+        [ForeignKey(nameof(FromUserId))]
+        public IdentityUser FromUser { get; set; } = null!;
 
         [Required]
         public int PlayerId { get; set; }

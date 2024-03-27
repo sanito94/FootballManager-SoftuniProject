@@ -4,6 +4,7 @@ using FootballManager_SoftuniProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FootballManager_SoftuniProject.Infrastructure.Migrations
 {
     [DbContext(typeof(FootballManagerDbContext))]
-    partial class FootballManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240325070642_TransferMarketPlayerFromUser")]
+    partial class TransferMarketPlayerFromUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,8 +84,8 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("StartingGold")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("StartingGold")
+                        .HasColumnType("float");
 
                     b.Property<int>("TeamId")
                         .HasColumnType("int");

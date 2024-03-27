@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FootballManager_SoftuniProject.Controllers
 {
-    public class LeagueController : Controller
+    public class LeagueController : BaseController
     {
         private readonly ILeagueService leagueService;
 

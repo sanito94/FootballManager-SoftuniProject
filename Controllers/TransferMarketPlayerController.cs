@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace FootballManager_SoftuniProject.Controllers
 {
-    public class TransferMarketPlayerController : Controller
+    public class TransferMarketPlayerController : BaseController
     {
         private readonly FootballManagerDbContext context;
 
@@ -30,7 +30,7 @@ namespace FootballManager_SoftuniProject.Controllers
                     Country = p.Country,
                     Position = p.Position,
                     Price = p.Price,
-                    UserId = GetUserId(),
+                    UserId = p.FromUser.UserName
                 })
                 .ToListAsync();
 
@@ -73,13 +73,51 @@ namespace FootballManager_SoftuniProject.Controllers
                 Name = model.Name,
                 Age = model.Age,
                 Country = model.Country,
-                FromUser = GetUserId(),
+                FromUserId = GetUserId(),
                 Position = model.Position,
                 Price = model.Price,
                 PlayerId = id
             };
 
             await context.TranferMarketPlayers.AddAsync(playerr);
+            await context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(AllPlayers));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> BuyPlayer(int id)
+        {
+            var transferPlayer = await context.TranferMarketPlayers
+                .Where(tp => tp.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (transferPlayer == null)
+            {
+                throw new ArgumentException("Couldn't find Transfer Market Player");
+            }
+
+            var playerr = await context.Players
+                .Where(p=> p.Id == transferPlayer.PlayerId)
+                .FirstOrDefaultAsync();
+
+            var managerId = GetUserId();
+
+            var manager = await context.Managers
+                .Where(p => p.UserId == managerId)
+                .FirstOrDefaultAsync();
+
+            if (manager == null)
+            {
+                throw new ArgumentException("Couldn't find the Manager");
+            }
+
+            playerr.UserId = managerId;
+            playerr.ManagerId = manager.Id;
+            playerr.TeamId = manager.TeamId;
+            manager.StartingGold -= transferPlayer.Price;
+
+            context.TranferMarketPlayers.Remove(transferPlayer);
             await context.SaveChangesAsync();
 
             return RedirectToAction(nameof(AllPlayers));

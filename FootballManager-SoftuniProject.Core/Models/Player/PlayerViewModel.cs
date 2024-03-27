@@ -20,6 +20,11 @@ namespace FootballManager_SoftuniProject.Core.Models.Player
 
         public string Position { get; set; } = null!;
 
+        [Range(typeof(decimal), 
+            "0", 
+            "1000", 
+            ConvertValueInInvariantCulture = true,
+            ErrorMessage = "Price must be positive number and less than 1000")]
         public decimal Price { get; set; }
 
         public int? TeamId { get; set; }

@@ -35,7 +35,7 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
         [ForeignKey(nameof(UserId))]
         public IdentityUser User { get; set; } = null!;
 
-        public double StartingGold { get; set; }
+        public decimal StartingGold { get; set; }
 
         [Required]
         public int TeamId { get; set; }

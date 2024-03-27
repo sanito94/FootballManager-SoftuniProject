@@ -9,7 +9,7 @@ using System.Security.Claims;
 
 namespace FootballManager_SoftuniProject.Controllers
 {
-    public class ManagerController : Controller
+    public class ManagerController : BaseController
     {
         private readonly IManagerService managerService;
         private readonly FootballManagerDbContext context;

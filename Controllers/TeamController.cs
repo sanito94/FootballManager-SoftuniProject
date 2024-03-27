@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FootballManager_SoftuniProject.Controllers
 {
-    public class TeamController : Controller
+    public class TeamController : BaseController
     {
         public readonly ITeamService teamService;
 

@@ -21,7 +21,7 @@ namespace FootballManager_SoftuniProject.Controllers
         {
             if (await leagueService.ExistsById(User.Id()))
             {
-                return RedirectToAction("AllPlayers", "Player");
+                return RedirectToAction("ProfileDetails", "Profile");
             }
 
             var model = await leagueService.AllLeagues();

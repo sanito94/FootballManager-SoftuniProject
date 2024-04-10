@@ -1,12 +1,6 @@
 ﻿using FootballManager_SoftuniProject.Core.Contracts.Manager;
-using FootballManager_SoftuniProject.Core.Models.Manager;
 using FootballManager_SoftuniProject.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FootballManager_SoftuniProject.Core.Services.Manager
 {

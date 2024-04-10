@@ -75,7 +75,7 @@ namespace FootballManager_SoftuniProject.Controllers
             
             await context.SaveChangesAsync();
 
-            return RedirectToAction("AllPlayers", "Player");
+            return RedirectToAction("ProfileDetails", "Profile");
         }
 
 

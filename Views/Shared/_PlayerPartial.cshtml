@@ -15,8 +15,8 @@
 
             @if (User.Identity.Name == Model.UserId)
             {
-               <a asp-controller="House" asp-action="Details" asp-route-id="@Model.Id"
-                    class="btn btn-danger">Edit</a>
+                   <a asp-controller="TransferMarketPlayer" asp-action="Edit" asp-route-id="@Model.Id"
+                    class="btn btn-success">Edit</a>
             }
             else
             {

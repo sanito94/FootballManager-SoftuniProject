@@ -34,9 +34,27 @@ namespace FootballManager_SoftuniProject.Controllers
             return View(model);
         }
 
-        
+        [HttpGet]
+        public async Task<IActionResult> AllPlayer()
+        {
+            var model = await context.Players
+                .AsNoTracking()
+                .Where(p => p.UserId == GetUserId())
+                .Select(p => new PlayerViewModel()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Age = p.Age,
+                    Country = p.Country,
+                    Position = p.Position,
+                    Price = p.Price,
+                })
+                .ToListAsync();
 
-        
+            return View(model);
+        }
+
+
 
         private string GetUserId()
         {

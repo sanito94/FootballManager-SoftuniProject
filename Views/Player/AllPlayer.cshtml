@@ -19,15 +19,13 @@
                         <p class="mb-0"><span class="fw-bold">Position: </span>@p.Position</p>
                         <p class="mb-0"><span class="fw-bold">Price: </span>@p.Price</p>
                     </div>
-
-                     <a asp-controller="TransferMarketPlayer" asp-action="AddPlayer" asp-route-id="@p.Id" class="btn btn-warning mb-2 w-100 p-3 fw-bold">More Details</a>
                         <a asp-controller="TransferMarketPlayer" asp-action="AddPlayersToMarket" asp-route-id="@p.Id" class="btn btn-info mb-2 w-100 p-3 fw-bold">Add to Market</a>
                 </div>
     }
 
     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
     {
-            <a asp-controller="Admin" asp-action="AddPlayers" class="btn btn-primary btn-lg" role="button">Add Player</a>
+            <a asp-controller="Admin" asp-action="AddPlayer" class="btn btn-primary btn-lg" role="button">Add Player</a>
                     <a asp-controller="Admin" asp-action="MarketPlayers" class="btn btn-danger btn-lg" role="button">Transfer Market</a>
     }
 </div>

@@ -9,6 +9,7 @@ using FootballManager_SoftuniProject.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 using System.Security.Claims;
 
 namespace FootballManager_SoftuniProject.Controllers
@@ -39,9 +40,57 @@ namespace FootballManager_SoftuniProject.Controllers
             return View(model);
         }
 
-        
+		[HttpGet]
+		public async Task<IActionResult> AddPlayersToMarket(int id)
+		{
+			var model = await context.Players.Where(p => p.Id == id)
+				.AsNoTracking()
+				.Select(p => new TransferMarketPlayerViewModel()
+				{
+					Name = p.Name,
+					Age = p.Age,
+					Country = p.Country,
+					Position = p.Position,
+					Price = p.Price,
+					UserId = GetUserId(),
+					PlayerId = id
+				})
+				.FirstOrDefaultAsync();
 
-        [HttpPost]
+
+			return View(model);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> AddPlayersToMarket(TransferMarketPlayerViewModel model, int id)
+		{
+			var player = await context.TranferMarketPlayers.FirstOrDefaultAsync(p => p.PlayerId == id);
+
+			if (player != null)
+			{
+				throw new ArgumentException("Sorry but the player already exist in the Market");
+			}
+
+			var playerr = new TransferMarketPlayer()
+			{
+				Name = model.Name,
+				Age = model.Age,
+				Country = model.Country,
+				FromUserId = GetUserId(),
+				Position = model.Position,
+				Price = model.Price,
+				PlayerId = id
+			};
+
+			await context.TranferMarketPlayers.AddAsync(playerr);
+			await context.SaveChangesAsync();
+
+			return RedirectToAction("AllSearch", "TransferMarketPlayer");
+		}
+
+
+
+		[HttpPost]
         public async Task<IActionResult> BuyPlayer(int id)
         {
             var transferPlayer = await context.TranferMarketPlayers
@@ -110,6 +159,50 @@ namespace FootballManager_SoftuniProject.Controllers
 
             return View(player);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var player = await context.TranferMarketPlayers
+                .Where(p => p.Id == id)
+                .AsNoTracking()
+                .Select(p => new TransferMarketPlayerViewModel()
+                {
+                    Name = p.Name,
+                    Age = p.Age,
+                    Country = p.Country,
+                    Position = p.Position,
+                    Price = p.Price,
+                })
+                .FirstOrDefaultAsync();
+
+
+            return View(player);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, TransferMarketPlayerViewModel model)
+        {
+            var player = await context.TranferMarketPlayers
+                .FindAsync(id);
+
+            if (player == null)
+            {
+                throw new ArgumentException("Error with the Edit Action");
+            }
+
+            if (player.FromUserId != GetUserId())
+            {
+                return Unauthorized();
+            }
+
+            player.Price = model.Price;
+
+            await context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(AllSearch));
+        }
+
 
 
         private string GetUserId()

@@ -1,0 +1,61 @@
+﻿@model AddTeamViewModel
+@{
+    ViewBag.Title = "Announce Seminar";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form asp-action="AddTeam" method="post">
+            <div class="mb-3">
+                <label asp-for="@Model.Name" class="form-label-add-edit">Team Name:</label>
+                <input asp-for="@Model.Name" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Country" class="form-label-add-edit">Country:</label>
+                <input asp-for="@Model.Country" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.Country" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.ImageUrl" class="form-label-add-edit">Image:</label>
+                <input asp-for="@Model.ImageUrl" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.ImageUrl" class="text-danger"></span>
+            </div>
+            
+            <div class="mb-3">
+                <label asp-for="@Model.StadiumId" class="form-label-add-edit">Select Stadium:</label>
+                <select asp-for="@Model.StadiumId" class="form-control" aria-required="true">
+                    <option disabled selected value="">Select Category...</option>
+                    @foreach (var stadium in Model.Stadium)
+                    {
+                                    <option value="@stadium.Id">@stadium.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="@Model.StadiumId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.LeagueId" class="form-label-add-edit">Select League:</label>
+                <select asp-for="@Model.LeagueId" class="form-control" aria-required="true">
+                    <option disabled selected value="">Select Category...</option>
+                    @foreach (var league in Model.League)
+                    {
+                                <option value="@league.Id">@league.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="@Model.LeagueId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <input class="btn btn-warning mb-2 w-100 p-3 fw-bold" type="submit" value="Add" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+}
+

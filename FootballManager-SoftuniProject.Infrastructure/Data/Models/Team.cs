@@ -15,6 +15,7 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
         {
             Players = new List<Player>();
             Managers = new List<Manager>();
+            Results = new List<Result>();
         }
 
         [Key]
@@ -43,5 +44,7 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
         public ICollection<Player> Players { get; set; }
 
         public ICollection<Manager> Managers { get; set; }
+
+        public ICollection<Result> Results { get; set; }
     }
 }

@@ -28,6 +28,7 @@ namespace FootballManager_SoftuniProject.Data
         public DbSet<Team> Teams { get; set; } = null!;
         public DbSet<League> League { get; set; } = null!;
         public DbSet<Profile> Profiles { get; set; } = null!;
+        public DbSet<Result> Results { get; set; } = null!;
         public DbSet<TransferMarketPlayer> TranferMarketPlayers { get; set; }
 
     }

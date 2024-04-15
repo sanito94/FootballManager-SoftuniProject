@@ -1,15 +1,16 @@
 ﻿@model IEnumerable<AllStadiumViewModel>
 @{
-    ViewBag.Title = "Choose your Stadium";
+    ViewBag.Title = "Great You have finished the registration. Now its time to Create your Manager.";
 }
 
 
 <h2 class="text-center">@ViewBag.Title</h2>
+<p><h2 class="text-center">1.Choose your Stadium</h2></p>
 <hr />
 <div class="text-center row">
     @foreach (var p in Model)
     {
-                    <div class="card col-4" style="width: 20rem; ">
+                    <div class="card col-4" style="width: 20rem;">
                         <div class="card-body">
                             <h4 class="card-title mt-1">@p.Name</h4>
                         </div>
@@ -19,7 +20,7 @@
     }
 </div>
 
-<h2 class="text-center">If you want you can create your own Stadium</h2>
+<p><h2 class="text-center">If you want you can create your own Stadium</h2></p>
                         <a asp-controller="Stadium" asp-action="AddStadiums" class="btn btn-success mb-2 w-100 p-3 fw-bold">Create a Stadium</a>
 
 @section Scripts {

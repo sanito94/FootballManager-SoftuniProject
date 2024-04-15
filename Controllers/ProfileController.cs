@@ -7,7 +7,7 @@ using System.Security.Claims;
 
 namespace FootballManager_SoftuniProject.Controllers
 {
-    public class ProfileController : BaseController
+    public class ProfileController : Controller
     {
         private readonly FootballManagerDbContext context;
 
@@ -15,12 +15,16 @@ namespace FootballManager_SoftuniProject.Controllers
         {
             context = _context;
         }
-
         
 
         public async Task<IActionResult> ProfileDetails()
         {
             var manager = await context.Managers.FirstOrDefaultAsync(m=>m.UserId == GetUserId());
+
+            if (manager == null)
+            {
+                throw new ArgumentException("Please finish the creation of the Manager first");
+            }
 
             var team = await context.Teams.FirstOrDefaultAsync(t => t.Id == manager.TeamId);
 

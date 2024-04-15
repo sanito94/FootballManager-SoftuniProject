@@ -14,7 +14,7 @@ using System.Security.Claims;
 
 namespace FootballManager_SoftuniProject.Controllers
 {
-    public class TransferMarketPlayerController : BaseController
+    public class TransferMarketPlayerController : Controller
     {
         private readonly FootballManagerDbContext context;
         private readonly ITransferMarketService playerService;
@@ -106,21 +106,25 @@ namespace FootballManager_SoftuniProject.Controllers
                 .Where(p=> p.Id == transferPlayer.PlayerId)
                 .FirstOrDefaultAsync();
 
-            var managerId = GetUserId();
-
-            var manager = await context.Managers
-                .Where(p => p.UserId == managerId)
+            var managerBuyer = await context.Managers
+                .Where(m => m.UserId == GetUserId())
                 .FirstOrDefaultAsync();
 
-            if (manager == null)
+            if (managerBuyer == null)
             {
                 throw new ArgumentException("Couldn't find the Manager");
             }
 
-            playerr.UserId = managerId;
-            playerr.ManagerId = manager.Id;
-            playerr.TeamId = manager.TeamId;
-            manager.StartingGold -= transferPlayer.Price;
+            var managerSeller = await context.Managers
+                .Where(m => m.UserId == playerr.UserId)
+                .FirstOrDefaultAsync();
+
+
+            playerr.UserId = managerBuyer.UserId;
+            playerr.ManagerId = managerBuyer.Id;
+            playerr.TeamId = managerBuyer.TeamId;
+            managerBuyer.StartingGold -= transferPlayer.Price;
+            managerSeller.StartingGold += transferPlayer.Price;
 
             context.TranferMarketPlayers.Remove(transferPlayer);
             await context.SaveChangesAsync();

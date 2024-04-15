@@ -11,7 +11,7 @@ using System.Security.Claims;
 
 namespace FootballManager_SoftuniProject.Controllers
 {
-    public class AdminController : BaseController
+    public class AdminController : Controller
     {
         private readonly FootballManagerDbContext context;
 

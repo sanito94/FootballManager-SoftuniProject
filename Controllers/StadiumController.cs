@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace FootballManager_SoftuniProject.Controllers
 {
-    public class StadiumController : BaseController
+    public class StadiumController : Controller
     {
         private readonly FootballManagerDbContext context;
 

@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace FootballManager_SoftuniProject.Controllers
 {
-    public class PlayerController : BaseController
+    public class PlayerController : Controller
     {
         private readonly FootballManagerDbContext context;
         private readonly IPlayerService playerService;

@@ -9,9 +9,8 @@ using System.Security.Claims;
 
 namespace FootballManager_SoftuniProject.Controllers
 {
-    public class ManagerController : BaseController
+    public class ManagerController : Controller
     {
-        private readonly IManagerService managerService;
         private readonly FootballManagerDbContext context;
 
         private static readonly string[] firstNames = { "John", "Paul", "Ringo", "George", "Noah","Liam","Mason","Jacob","William","Ethan","James","Alexander","Michael","Benjamin","Elijah","Daniel","Aiden","Logan","Matthew","Lucas","Jackson","David","Oliver","Jayden","Joseph","Gabriel","Samuel","Carter","Anthony","John","Dylan","Luke","Henry","Andrew","Isaac","Christopher","Joshua","Wyatt","Sebastian","Owen","Caleb","Nathan","Ryan","Jack","Hunter","Levi","Christian","Jaxon","Julian","Landon","Grayson","Jonathan","Isaiah","Charles","Thomas","Aaron","Eli","Connor","Jeremiah","Cameron","Josiah","Adrian","Colton","Jordan","Brayden","Nicholas","Robert","Angel","Hudson","Lincoln","Evan","Dominic","Austin","Gavin","Nolan","Parker","Adam","Chase","Jace","Ian", "Easton","Kevin","Jose","Tyler","Brandon","Asher","Jaxson","Mateo","Jason","Ayden","Zachary","Carson","Xavier","Leo", "Ezra","Bentley","Sawyer", "Kayden","Blake","Nathaniel","Ryder","Theodore","Elias","Tristan","Roman","Leonardo", };
@@ -28,7 +27,6 @@ namespace FootballManager_SoftuniProject.Controllers
 
         public ManagerController(IManagerService _managerService, FootballManagerDbContext _context)
         {
-            managerService = _managerService;
             context = _context;
         }
 

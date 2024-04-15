@@ -10,6 +10,5 @@ namespace FootballManager_SoftuniProject.Core.Models.Stadium
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
-        public int Capacity { get; set; }
     }
 }

@@ -98,7 +98,6 @@ namespace FootballManager_SoftuniProject.Controllers
             var stadium = new Stadium()
             {
                 Name = model.Name,
-                Capacity = model.Capacity,
             };
 
             await context.Stadiums.AddAsync(stadium);
@@ -107,57 +106,6 @@ namespace FootballManager_SoftuniProject.Controllers
             return RedirectToAction(nameof(AllPlayers));
         }
 
-        [HttpGet]
-        public async Task<IActionResult> AddTeam()
-        {
-            var team = new AddTeamViewModel();
-
-            team.Stadium = await context.Stadiums
-                .AsNoTracking()
-                .Select(s => new AllStadiumViewModel()
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    Capacity = s.Capacity,
-                })
-                .ToListAsync();
-
-            team.League = await context.League
-                .AsNoTracking()
-                .Select(s => new AllLeaguesViewModel()
-                {
-                    Id = s.Id,
-                    Name = s.Name
-                })
-                .ToListAsync();
-
-            return View(team);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddTeam(AddTeamViewModel model)
-        {
-            var check = await context.Teams.FirstOrDefaultAsync(t => t.Name == model.Name);
-
-            if (check != null)
-            {
-                throw new ArgumentException("Sry the team already exist");
-            }
-
-            var team = new Team()
-            {
-                Name = model.Name,
-                Country = model.Country,
-                ImageUrl = model.ImageUrl,
-                StadiumId = model.StadiumId,
-                LeagueId = model.LeagueId,
-            };
-
-            await context.Teams.AddAsync(team);
-            await context.SaveChangesAsync();
-
-            return RedirectToAction(nameof(AllPlayers));
-        }
 
         [HttpGet]
         public async Task<IActionResult> MarketPlayers()

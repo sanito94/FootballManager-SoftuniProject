@@ -17,7 +17,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models.Seed
 
             builder.HasData(new Team[]
             {
-                data.RealMadrid,
                 data.AdminTeam
             });
         }

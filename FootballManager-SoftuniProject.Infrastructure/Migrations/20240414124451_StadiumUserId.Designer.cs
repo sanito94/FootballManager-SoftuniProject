@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FootballManager_SoftuniProject.Infrastructure.Migrations
 {
     [DbContext(typeof(FootballManagerDbContext))]
-    [Migration("20240327145955_StartingGoldToDecimal")]
-    partial class StartingGoldToDecimal
+    [Migration("20240414124451_StadiumUserId")]
+    partial class StadiumUserId
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -219,30 +219,19 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Capacity")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Stadiums");
+                    b.HasIndex("UserId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 2,
-                            Capacity = 80000,
-                            Name = "Santiago Bernabeu"
-                        },
-                        new
-                        {
-                            Id = 1,
-                            Capacity = 100000,
-                            Name = "Admin"
-                        });
+                    b.ToTable("Stadiums");
                 });
 
             modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Statistic", b =>
@@ -288,10 +277,19 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("Draws")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("LeagueId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Loses")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MatchesPlayed")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -299,7 +297,17 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
+
                     b.Property<int>("StadiumId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Wins")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -308,27 +316,9 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
 
                     b.HasIndex("StadiumId");
 
-                    b.ToTable("Teams");
+                    b.HasIndex("UserId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 2,
-                            Country = "Spain",
-                            ImageUrl = "https://banner2.cleanpng.com/20180602/psw/kisspng-real-madrid-c-f-uefa-champions-league-la-liga-juv-5b1351b072b362.2456057615279927524698.jpg",
-                            LeagueId = 3,
-                            Name = "Real Madrid",
-                            StadiumId = 2
-                        },
-                        new
-                        {
-                            Id = 1,
-                            Country = "Bulgaria",
-                            ImageUrl = "https://c8.alamy.com/comp/2H36T4F/three-persons-admin-icon-outline-three-persons-admin-vector-icon-color-flat-isolated-2H36T4F.jpg",
-                            LeagueId = 1,
-                            Name = "Admin",
-                            StadiumId = 1
-                        });
+                    b.ToTable("Teams");
                 });
 
             modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TransferMarketPlayer", b =>
@@ -649,6 +639,17 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                     b.Navigation("Team");
                 });
 
+            modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Stadium", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.Statistic", b =>
                 {
                     b.HasOne("FootballManager_SoftuniProject.Infrastructure.Data.Models.Match", "Match")
@@ -674,9 +675,17 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("League");
 
                     b.Navigation("Stadium");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FootballManager_SoftuniProject.Infrastructure.Data.Models.TransferMarketPlayer", b =>

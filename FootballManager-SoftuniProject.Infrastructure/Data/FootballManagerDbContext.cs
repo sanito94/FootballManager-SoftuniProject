@@ -14,8 +14,6 @@ namespace FootballManager_SoftuniProject.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new LeagueConfiguration());
-            builder.ApplyConfiguration(new StadiumConfiguration());
-            builder.ApplyConfiguration(new TeamConfiguration());
 
             base.OnModelCreating(builder);
         }
@@ -28,7 +26,6 @@ namespace FootballManager_SoftuniProject.Data
         public DbSet<Team> Teams { get; set; } = null!;
         public DbSet<League> League { get; set; } = null!;
         public DbSet<Profile> Profiles { get; set; } = null!;
-        public DbSet<Result> Results { get; set; } = null!;
         public DbSet<TransferMarketPlayer> TranferMarketPlayers { get; set; }
 
     }

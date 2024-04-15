@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,7 +16,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
         {
             Players = new List<Player>();
             Managers = new List<Manager>();
-            Results = new List<Result>();
         }
 
         [Key]
@@ -41,10 +41,21 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
         [ForeignKey(nameof(LeagueId))]
         public League League { get; set; }
 
+        [Required]
+        public string UserId { get; set; } = null!;
+        [Required]
+        [ForeignKey(nameof(UserId))]
+        public IdentityUser User { get; set; } = null!;
+
+        public int MatchesPlayed { get; set; }
+        public int Wins { get; set; }
+        public int Draws { get; set; }
+        public int Loses { get; set; }
+        public int Points { get; set; }
+
         public ICollection<Player> Players { get; set; }
 
         public ICollection<Manager> Managers { get; set; }
 
-        public ICollection<Result> Results { get; set; }
     }
 }

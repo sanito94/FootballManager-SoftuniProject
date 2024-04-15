@@ -5,23 +5,21 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FootballManager_SoftuniProject.Core.Models.Team;
 
-namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
+namespace FootballManager_SoftuniProject.Core.Models.Result
 {
-    public class Result
+    public class AllResultsViewModel
     {
         public int Id { get; set; }
 
-        [Required]
-        public int TeamId { get; set; }
-        [Required]
-        [ForeignKey(nameof(TeamId))]
-        public Team Team { get; set; } = null!;
+        public string TeamName { get; set; } = null!;
 
         public int MatchesPlayed { get; set; }
         public int Wins { get; set; }
         public int Draws { get; set; }
         public int Loses { get; set; }
         public int Points { get; set; }
+
     }
 }

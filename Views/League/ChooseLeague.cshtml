@@ -18,7 +18,8 @@
                                         <h4 class="card-title mt-1">@l.Name</h4>
                                             <img class="d-block w-100" style="height:300px" src="@l.ImageUrl">
                                     </div>
-                                            <a asp-controller="Team" asp-action="ChooseTeam" asp-route-id="@l.Id" class="btn btn-success mb-2 w-100 p-3 fw-bold">Choose</a>
+                                            <a asp-controller="Team" asp-action="ChooseTeam" class="btn btn-success mb-2 w-100 p-3 fw-bold">Choose a Team</a>
+                                                    <a asp-controller="Stadium" asp-action="AddStadiums" asp-route-id="@l.Id" class="btn btn-success mb-2 w-100 p-3 fw-bold">Choose a Stadium</a>
                                 </div>
 
         }
@@ -32,7 +33,7 @@
                                         <h4 class="card-title mt-1">@l.Name</h4>
                                             <img class="d-block w-100" style="height:300px" src="@l.ImageUrl">
                                     </div>
-                                            <a asp-controller="Team" asp-action="ChooseTeam" asp-route-id="@l.Id" class="btn btn-success mb-2 w-100 p-3 fw-bold">Choose</a>
+                                            <a asp-controller="Stadium" asp-action="AllStadiums" class="btn btn-success mb-2 w-100 p-3 fw-bold">Choose</a>
                                 </div>
 
         }

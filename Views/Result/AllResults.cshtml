@@ -1,0 +1,51 @@
+﻿@model IEnumerable<AllResultsViewModel>
+@{
+    ViewBag.Title = "Choose Players";
+}
+
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+<div class="text-center row">
+
+
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Matches Played</th>
+      <th scope="col">Wins</th>
+      <th scope="col">Draws</th>
+      <th scope="col">Loses</th>
+      <th scope="col">Points</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+                @foreach (var r in Model)
+                {
+                    <th scope="row">@r.TeamName</th>
+                        <td>@r.MatchesPlayed</td>
+                        <td>@r.Wins</td>
+                        <td>@r.Draws</td>
+                        <td>@r.Loses</td>
+                        <td>@r.Points</td>
+                }
+    </tr>
+  </tbody>
+</table>
+    
+    
+
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+    {
+                <a asp-controller="Admin" asp-action="AddPlayers" class="btn btn-primary btn-lg" role="button">Add Player to the Team</a>
+                <a asp-controller="Admin" asp-action="MarketPlayers" class="btn btn-danger btn-lg" role="button">Transfer Market</a>
+                <a asp-controller="Admin" asp-action="AddStadium" class="btn btn-secondary btn-lg" role="button">Add a Stadium</a>
+                <a asp-controller="Admin" asp-action="AddTeam" class="btn btn-success btn-lg" role="button">Add a Team</a>
+    }
+</div>
+
+@section Scripts {
+                <partial name="_ValidationScriptsPartial" />
+}

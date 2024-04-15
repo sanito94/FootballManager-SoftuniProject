@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<AllTeamsViewModels>
 @{
-    ViewBag.Title = "Please choose a Team";
+    ViewBag.Title = "Great. You have successfully created your team. Now its time to create your Manager";
 }
 
 
@@ -19,8 +19,7 @@
                  src="@e.ImageUrl">
                     </div>
                     <form asp-action="ChooseTeam" method="post">
-                        <a asp-controller="Team" asp-action="ChooseTeam" asp-route-id="@e.Id" class="btn btn-info mb-2 w-100 p-3 fw-bold">More Details</a>
-                                <a asp-controller="Manager" asp-action="CreateManager" asp-route-id="@e.Id" class="btn btn-success mb-2 w-100 p-3 fw-bold">Choose</a>
+                                <a asp-controller="Manager" asp-action="CreateManager" asp-route-id="@e.Id" class="btn btn-success mb-2 w-100 p-3 fw-bold">Create Manager</a>
                     </form>
                 </div>
         

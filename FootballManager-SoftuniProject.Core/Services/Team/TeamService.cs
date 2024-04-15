@@ -21,11 +21,10 @@ namespace FootballManager_SoftuniProject.Core.Services.Team
             context = _context;
         }
 
-        public async Task<IEnumerable<AllTeamsViewModels>> AllTeams(int id)
+        public async Task<IEnumerable<AllTeamsViewModels>> AllTeams()
         {
             return await context.Teams
                 .AsNoTracking()
-                .Where(l=>l.League.Id == id)
                 .Select(t=> new AllTeamsViewModels()
                 {
                     Id = t.Id,

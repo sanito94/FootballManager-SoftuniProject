@@ -16,5 +16,7 @@ namespace FootballManager_SoftuniProject.Core.Models.Team
         public string Name { get; set; } = null!;
 
         public string ImageUrl { get; set; } = null!;
+
+
     }
 }

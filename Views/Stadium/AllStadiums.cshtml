@@ -1,0 +1,27 @@
+﻿@model IEnumerable<AllStadiumViewModel>
+@{
+    ViewBag.Title = "Choose your Stadium";
+}
+
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+<div class="text-center row">
+    @foreach (var p in Model)
+    {
+                    <div class="card col-4" style="width: 20rem; ">
+                        <div class="card-body">
+                            <h4 class="card-title mt-1">@p.Name</h4>
+                        </div>
+                            <a asp-controller="Team" asp-action="AddTeam" asp-route-id="@p.Id" class="btn btn-info mb-2 w-100 p-3 fw-bold">Choose Stadium</a>
+                    </div>
+                        
+    }
+</div>
+
+<h2 class="text-center">If you want you can create your own Stadium</h2>
+                        <a asp-controller="Stadium" asp-action="AddStadiums" class="btn btn-success mb-2 w-100 p-3 fw-bold">Create a Stadium</a>
+
+@section Scripts {
+                <partial name="_ValidationScriptsPartial" />
+}

@@ -1,6 +1,6 @@
 ﻿@model AllStadiumViewModel
 @{
-    ViewBag.Title = "Announce Seminar";
+    ViewBag.Title = "Stadium";
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
@@ -8,15 +8,15 @@
 
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
-        <form asp-action="AddStadium" method="post">
+        <form asp-controller="Stadium" asp-action="AddStadiums" asp-route-id="@Model.Id" method="post">
             <div class="mb-3">
                 <label asp-for="@Model.Name" class="form-label-add-edit">Stadium Name:</label>
                 <input asp-for="@Model.Name" class="form-control" aria-required="true" />
                 <span asp-validation-for="@Model.Name" class="text-danger"></span>
             </div>
-            
+
             <div class="mb-3">
-                <input class="btn btn-warning mb-2 w-100 p-3 fw-bold" type="submit" value="Add" />
+                <input  class="btn btn-warning mb-2 w-100 p-3 fw-bold" type="submit" value="Add" />
             </div>
         </form>
     </div>
@@ -24,6 +24,6 @@
 
 
 @section Scripts {
-            <partial name="_ValidationScriptsPartial" />
+                <partial name="_ValidationScriptsPartial" />
 }
 

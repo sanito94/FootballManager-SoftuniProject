@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FootballManager_SoftuniProject.Infrastructure.Migrations
 {
-    public partial class TransferMarketPlayerUpdated : Migration
+    public partial class UpdateTeam : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -74,24 +74,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Stadiums", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TranferMarketPlayers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Position = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    FromUser = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TranferMarketPlayers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -201,6 +183,31 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TranferMarketPlayers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Position = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    FromUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PlayerId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TranferMarketPlayers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TranferMarketPlayers_AspNetUsers_FromUserId",
+                        column: x => x.FromUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Matches",
                 columns: table => new
                 {
@@ -233,11 +240,23 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                     Country = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StadiumId = table.Column<int>(type: "int", nullable: false),
-                    LeagueId = table.Column<int>(type: "int", nullable: false)
+                    LeagueId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    MatchesPlayed = table.Column<int>(type: "int", nullable: false),
+                    Wins = table.Column<int>(type: "int", nullable: false),
+                    Draws = table.Column<int>(type: "int", nullable: false),
+                    Loses = table.Column<int>(type: "int", nullable: false),
+                    Points = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Teams", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Teams_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Teams_League_LeagueId",
                         column: x => x.LeagueId,
@@ -285,7 +304,7 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                     Age = table.Column<int>(type: "int", nullable: false),
                     Nationality = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    StartingGold = table.Column<double>(type: "float", nullable: false),
+                    StartingGold = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TeamId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -302,7 +321,7 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         column: x => x.TeamId,
                         principalTable: "Teams",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -340,7 +359,7 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                         column: x => x.TeamId,
                         principalTable: "Teams",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -389,16 +408,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                     { 1, 100000, "Admin" },
                     { 2, 80000, "Santiago Bernabeu" }
                 });
-
-            migrationBuilder.InsertData(
-                table: "Teams",
-                columns: new[] { "Id", "Country", "ImageUrl", "LeagueId", "Name", "StadiumId" },
-                values: new object[] { 1, "Bulgaria", "https://c8.alamy.com/comp/2H36T4F/three-persons-admin-icon-outline-three-persons-admin-vector-icon-color-flat-isolated-2H36T4F.jpg", 1, "Admin", 1 });
-
-            migrationBuilder.InsertData(
-                table: "Teams",
-                columns: new[] { "Id", "Country", "ImageUrl", "LeagueId", "Name", "StadiumId" },
-                values: new object[] { 2, "Spain", "https://banner2.cleanpng.com/20180602/psw/kisspng-real-madrid-c-f-uefa-champions-league-la-liga-juv-5b1351b072b362.2456057615279927524698.jpg", 3, "Real Madrid", 2 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -493,6 +502,16 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                 name: "IX_Teams_StadiumId",
                 table: "Teams",
                 column: "StadiumId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Teams_UserId",
+                table: "Teams",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TranferMarketPlayers_FromUserId",
+                table: "TranferMarketPlayers",
+                column: "FromUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -534,10 +553,10 @@ namespace FootballManager_SoftuniProject.Infrastructure.Migrations
                 name: "Matches");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Teams");
 
             migrationBuilder.DropTable(
-                name: "Teams");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "League");

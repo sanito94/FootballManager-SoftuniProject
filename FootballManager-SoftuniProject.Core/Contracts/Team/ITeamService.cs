@@ -10,7 +10,7 @@ namespace FootballManager_SoftuniProject.Core.Contracts.Team
 {
     public interface ITeamService
     {
-        Task<IEnumerable<AllTeamsViewModels>> AllTeams(int id);
+        Task<IEnumerable<AllTeamsViewModels>> AllTeams();
 
     }
 }

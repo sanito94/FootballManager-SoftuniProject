@@ -10,7 +10,7 @@ namespace FootballManager_SoftuniProject.Controllers
         {
             if (User?.Identities != null && User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("ChooseLeague", "League");
+                return RedirectToAction("AllStadiums", "Stadium");
             }
 
             return View();

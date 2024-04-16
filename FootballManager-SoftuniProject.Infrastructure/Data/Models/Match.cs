@@ -41,6 +41,10 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
         [ForeignKey(nameof(StadiumId))]
         public Stadium Stadium { get; set; }
 
+        public int HomeTeamScore { get; set; }
+
+        public int AwayTeamScore { get; set; }
+
         public ICollection<Statistic> Statistics { get; set; }
     }
 }

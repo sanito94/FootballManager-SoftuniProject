@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<AllResultsViewModel>
 @{
-    ViewBag.Title = "Choose Players";
+    ViewBag.Title = "League Table";
+    int day = DateTime.Now.Day + 3;
 }
 
 
@@ -21,30 +22,54 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
                 @foreach (var r in Model)
                 {
+                <tr>
                     <th scope="row">@r.TeamName</th>
                         <td>@r.MatchesPlayed</td>
                         <td>@r.Wins</td>
                         <td>@r.Draws</td>
                         <td>@r.Loses</td>
                         <td>@r.Points</td>
+                </tr>
                 }
-    </tr>
   </tbody>
 </table>
-    
-    
-
-    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-    {
-                <a asp-controller="Admin" asp-action="AddPlayers" class="btn btn-primary btn-lg" role="button">Add Player to the Team</a>
-                <a asp-controller="Admin" asp-action="MarketPlayers" class="btn btn-danger btn-lg" role="button">Transfer Market</a>
-                <a asp-controller="Admin" asp-action="AddStadium" class="btn btn-secondary btn-lg" role="button">Add a Stadium</a>
-                <a asp-controller="Admin" asp-action="AddTeam" class="btn btn-success btn-lg" role="button">Add a Team</a>
-    }
 </div>
+
+<div class="col-lg-6">
+            <div class="widget-next-match">
+              <div class="widget-title">
+                <h3>Next Match</h3>
+              </div>
+              <div class="widget-body mb-3">
+                <div class="widget-vs">
+                  <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
+                    <div class="team-1 text-center">
+                      <h3>Football League</h3>
+                    </div>
+                    <div>
+                      <span class="vs"><span>VS</span></span>
+                    </div>
+                    <div class="team-2 text-center">
+                      <h3>Soccer</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-center widget-vs-contents mb-4">
+                <h4>World Cup League</h4>
+                <p class="mb-5">
+                  <span class="d-block">December 20th, 2020</span>
+                  <span class="d-block">@DateTime.Now.DayOfWeek @DateTime.Now.AddDays(3) </span>
+                  <strong class="text-primary">New Euro Arena</strong>
+                </p>
+
+                @*<div id="date-countdown2" class="pb-1"></div>*@
+              </div>
+            </div>
+          </div>
 
 @section Scripts {
                 <partial name="_ValidationScriptsPartial" />

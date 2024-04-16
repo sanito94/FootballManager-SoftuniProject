@@ -23,8 +23,9 @@ namespace FootballManager_SoftuniProject.Controllers
 
             if (manager == null)
             {
-                throw new ArgumentException("Please finish the creation of the Manager first");
-            }
+				Response.StatusCode = 404;
+				return View("Error404");
+			}
 
             var team = await context.Teams.FirstOrDefaultAsync(t => t.Id == manager.TeamId);
 

@@ -19,5 +19,7 @@ namespace FootballManager_SoftuniProject.Core.Models.Profile
         public string LoginId { get; set; } = null!;
 
         public string TeamName { get; set; } = null!;
+
+        public string Username { get; set; } = null!;
     }
 }

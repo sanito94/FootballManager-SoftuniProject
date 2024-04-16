@@ -9,17 +9,20 @@
 <div class="row">
     <div class="card w-50">
         <div class="card-body">
-            <h3 class="card-title text-center">Your Profile:</h3>
+            <h3 class="card-title text-center">Username: @Model.Username</h3>
+            <br />
+            <br />
+            <br />
             <p class="mb-0"><span class="fw-bold">Your Gold: </span>@Model.StartGold</p>
             <p class="mb-0"><span class="fw-bold">Manager Name: </span>@Model.ManagerName</p>
             <p class="mb-0"><span class="fw-bold">Your Team: </span>@Model.TeamName</p>
         </div>
 
         <a asp-controller="TransferMarketPlayer" asp-action="AllSearch" class="btn btn-warning mb-2 w-100 p-3 fw-bold">Go to Transfer Market</a>
-        
+
 
     </div>
 </div>
 @section Scripts {
-        <partial name="_ValidationScriptsPartial" />
+            <partial name="_ValidationScriptsPartial" />
 }

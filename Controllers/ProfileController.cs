@@ -33,7 +33,8 @@ namespace FootballManager_SoftuniProject.Controllers
                 StartGold = manager.StartingGold,
                 Id = manager.Id,
                 ManagerName = manager.Name,
-                TeamName = team.Name
+                TeamName = team.Name,
+                Username = User.Identity.Name
             };
 
             return View(model);

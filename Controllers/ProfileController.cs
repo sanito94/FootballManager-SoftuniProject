@@ -24,7 +24,7 @@ namespace FootballManager_SoftuniProject.Controllers
             if (manager == null)
             {
 				Response.StatusCode = 404;
-				return View("Error404");
+				return RedirectToAction("Error404ManagerNotFound", "Error");
 			}
 
             var team = await context.Teams.FirstOrDefaultAsync(t => t.Id == manager.TeamId);

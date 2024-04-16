@@ -68,7 +68,8 @@ namespace FootballManager_SoftuniProject.Controllers
 
 			if (player != null)
 			{
-				throw new ArgumentException("Sorry but the player already exist in the Market");
+				Response.StatusCode = 404;
+				return RedirectToAction("Error404PlayerExistOnMarket", "Error");
 			}
 
 			var playerr = new TransferMarketPlayer()

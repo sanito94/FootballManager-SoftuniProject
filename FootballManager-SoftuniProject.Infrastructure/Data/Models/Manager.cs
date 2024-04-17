@@ -21,13 +21,16 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
         public int Id { get; set; }
 
         [Required]
+        [MaxLength(Constants.DataConstants.ManagerNameMaxLenght)]
         public string Name { get; set; } = null!;
 
         [Required]
+        [Range(Constants.DataConstants.ManagerAgeMin, Constants.DataConstants.ManagerAgeMax)]
         public int Age { get; set; }
 
         [Required]
-        public string Nationality { get; set; } = null!;
+		[MaxLength(Constants.DataConstants.ManagerNationalityMaxLenght)]
+		public string Nationality { get; set; } = null!;
 
         [Required]
         public string UserId { get; set; } = null!;

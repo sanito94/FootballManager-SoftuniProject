@@ -21,6 +21,7 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models
         public int Id { get; set; }
 
         [Required]
+        [MaxLength(Constants.DataConstants.StadiumNameMaxLenght)]
         public string Name { get; set; } = null!;
 
 

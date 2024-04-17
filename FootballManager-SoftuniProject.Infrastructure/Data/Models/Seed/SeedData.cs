@@ -15,13 +15,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models.Seed
         public League AdminLeague { get; set; } = null!;
 
 
-        public Stadium SantiagoBernabeu { get; set; } = null!;
-        public Stadium AdminStadium { get; set; } = null!;
-        public Team AdminTeam { get; set; } = null!;
-
-        public Player RandomPlayer1 { get; set; } = null!;
-
-
         public SeedData()
         {
             SeedLeagues();

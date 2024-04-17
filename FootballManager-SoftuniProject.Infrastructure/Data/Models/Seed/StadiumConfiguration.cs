@@ -11,8 +11,7 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models.Seed
 
             builder.HasData(new Stadium[]
             {
-                data.SantiagoBernabeu,
-                data.AdminStadium
+
             });
         }
     }

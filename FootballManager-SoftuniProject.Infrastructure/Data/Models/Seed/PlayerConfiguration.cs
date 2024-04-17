@@ -15,7 +15,6 @@ namespace FootballManager_SoftuniProject.Infrastructure.Data.Models.Seed
             var data = new SeedData();
             builder.HasData(new Player[]
             {
-                data.RandomPlayer1
             });
         }
     }

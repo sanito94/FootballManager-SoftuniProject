@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FootballManager_SoftuniProject.Core.Contracts.Player;
+using System.ComponentModel.DataAnnotations;
 
 namespace FootballManager_SoftuniProject.Core.Models.Player
 {
-    public class PlayerServiceModel
+    public class PlayerServiceModel : IPlayerModel
     {
         public int Id { get; set; }
 

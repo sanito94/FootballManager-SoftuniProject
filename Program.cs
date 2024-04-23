@@ -16,11 +16,12 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
 }
 else
 {
     app.UseExceptionHandler("/Home/Error");
-    app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
+    // app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
     app.UseHsts();
 }
 
@@ -32,8 +33,16 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapDefaultControllerRoute();
-app.MapRazorPages();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "Player Details",
+        pattern: "TransferMarketPlayer/Details/{id}/{information}",
+        defaults: new { Controller = "TransferMarketPlayer", Action = "Details" }
+        );
+    endpoints.MapDefaultControllerRoute();
+    endpoints.MapRazorPages();
+});
 
 using (var scope = app.Services.CreateScope())
 {

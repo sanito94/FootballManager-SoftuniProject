@@ -1,16 +1,10 @@
 ﻿using FootballManager_SoftuniProject.Core.Contracts.TransferMarket;
-using FootballManager_SoftuniProject.Core.Models.Manager;
 using FootballManager_SoftuniProject.Core.Models.Player;
 using FootballManager_SoftuniProject.Core.Models.TransferMarketPlayer;
-using FootballManager_SoftuniProject.Core.Services;
 using FootballManager_SoftuniProject.Data;
-using FootballManager_SoftuniProject.Infrastructure.Constants;
 using FootballManager_SoftuniProject.Infrastructure.Data.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Globalization;
 using System.Security.Claims;
 
 namespace FootballManager_SoftuniProject.Controllers

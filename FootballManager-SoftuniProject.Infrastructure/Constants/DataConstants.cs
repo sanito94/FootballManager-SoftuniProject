@@ -29,9 +29,15 @@ namespace FootballManager_SoftuniProject.Infrastructure.Constants
 		public const int StadiumNameMaxLenght = 30;
 		public const int StadiumNameMinLenght = 3;
 
-		// Messages
-		public const string RequierMessage = "Field {0} is requiered";
+        // Transfer Market Player
+        public const double PlayerPriceMax = 750;
+        public const int PlayerPriceMin = 1;
+
+
+        // Messages
+        public const string RequierMessage = "Field {0} is requiered";
 		public const string FieldMinAndMaxRequired = "Field {0} must be between {2} and {1} charecters long";
 		public const string FieldMinAndMaxAgeRequired = "Field {0} must be between {1} and {2} years old";
-	}
+        public const string FieldMinAndMaxPriceRequired = "Field {0} must be between {1} and {2} coins";
+    }
 }

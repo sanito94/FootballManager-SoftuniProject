@@ -12,10 +12,11 @@ using FootballManager_SoftuniProject.Data;
 using FootballManager_SoftuniProject.Infrastructure.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    public static class ServiceExtensions 
+    public static class ServiceExtensions
     {
         public static IServiceCollection AddAppService(this IServiceCollection services)
         {
@@ -44,7 +45,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddAppIdentity(this IServiceCollection services, IConfiguration config)
         {
             services
-                .AddDefaultIdentity<IdentityUser>(options => 
+                .AddDefaultIdentity<IdentityUser>(options =>
                 {
                     options.SignIn.RequireConfirmedAccount = false;
                     options.Password.RequireNonAlphanumeric = false;
@@ -53,6 +54,12 @@ namespace Microsoft.Extensions.DependencyInjection
                 })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<FootballManagerDbContext>();
+
+            services.AddAuthentication()
+                .AddCookie(options =>
+                {
+                    options.LoginPath = PathString.FromUriComponent("/Account/Login");
+                });
 
             return services;
         }

@@ -1,5 +1,4 @@
-﻿using FootballManager_SoftuniProject.Core.Models.Manager;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,13 +8,8 @@ using static FootballManager_SoftuniProject.Infrastructure.Constants.DataConstan
 
 namespace FootballManager_SoftuniProject.Core.Models.TransferMarketPlayer
 {
-    public class TransferMarketPlayerViewModel
+    public class TransferMarketPlayerEditViewModel
     {
-        public TransferMarketPlayerViewModel()
-        {
-            Managers = new List<CreateManagerViewModel>();
-        }
-
         public int Id { get; set; }
 
         public string Name { get; set; } = null!;
@@ -24,18 +18,13 @@ namespace FootballManager_SoftuniProject.Core.Models.TransferMarketPlayer
 
         public string Country { get; set; } = null!;
 
-        public string UserId { get; set; } = null!;
-
         [Required(ErrorMessage = RequierMessage)]
         [Range(PlayerPriceMin,
             PlayerPriceMax,
-            ErrorMessage = FieldMinAndMaxPriceRequired)]
+            ErrorMessage = FieldMinAndMaxAgeRequired)]
         public decimal Price { get; set; }
 
         public string Position { get; set; } = null!;
-
         public int PlayerId { get; set; }
-
-        public ICollection<CreateManagerViewModel> Managers { get; set; }
     }
 }

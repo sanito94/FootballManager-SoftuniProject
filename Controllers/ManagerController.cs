@@ -4,6 +4,7 @@ using FootballManager_SoftuniProject.Data;
 using FootballManager_SoftuniProject.Extensions;
 using FootballManager_SoftuniProject.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Security.Claims;
 
@@ -13,7 +14,7 @@ namespace FootballManager_SoftuniProject.Controllers
     {
         private readonly FootballManagerDbContext context;
 
-        private static readonly string[] firstNames = { "John", "Paul", "Ringo", "George", "Noah","Liam","Mason","Jacob","William","Ethan","James","Alexander","Michael","Benjamin","Elijah","Daniel","Aiden","Logan","Matthew","Lucas","Jackson","David","Oliver","Jayden","Joseph","Gabriel","Samuel","Carter","Anthony","John","Dylan","Luke","Henry","Andrew","Isaac","Christopher","Joshua","Wyatt","Sebastian","Owen","Caleb","Nathan","Ryan","Jack","Hunter","Levi","Christian","Jaxon","Julian","Landon","Grayson","Jonathan","Isaiah","Charles","Thomas","Aaron","Eli","Connor","Jeremiah","Cameron","Josiah","Adrian","Colton","Jordan","Brayden","Nicholas","Robert","Angel","Hudson","Lincoln","Evan","Dominic","Austin","Gavin","Nolan","Parker","Adam","Chase","Jace","Ian", "Easton","Kevin","Jose","Tyler","Brandon","Asher","Jaxson","Mateo","Jason","Ayden","Zachary","Carson","Xavier","Leo", "Ezra","Bentley","Sawyer", "Kayden","Blake","Nathaniel","Ryder","Theodore","Elias","Tristan","Roman","Leonardo", };
+        private static readonly string[] firstNames = { "John", "Paul", "Ringo", "George", "Noah", "Liam", "Mason", "Jacob", "William", "Ethan", "James", "Alexander", "Michael", "Benjamin", "Elijah", "Daniel", "Aiden", "Logan", "Matthew", "Lucas", "Jackson", "David", "Oliver", "Jayden", "Joseph", "Gabriel", "Samuel", "Carter", "Anthony", "John", "Dylan", "Luke", "Henry", "Andrew", "Isaac", "Christopher", "Joshua", "Wyatt", "Sebastian", "Owen", "Caleb", "Nathan", "Ryan", "Jack", "Hunter", "Levi", "Christian", "Jaxon", "Julian", "Landon", "Grayson", "Jonathan", "Isaiah", "Charles", "Thomas", "Aaron", "Eli", "Connor", "Jeremiah", "Cameron", "Josiah", "Adrian", "Colton", "Jordan", "Brayden", "Nicholas", "Robert", "Angel", "Hudson", "Lincoln", "Evan", "Dominic", "Austin", "Gavin", "Nolan", "Parker", "Adam", "Chase", "Jace", "Ian", "Easton", "Kevin", "Jose", "Tyler", "Brandon", "Asher", "Jaxson", "Mateo", "Jason", "Ayden", "Zachary", "Carson", "Xavier", "Leo", "Ezra", "Bentley", "Sawyer", "Kayden", "Blake", "Nathaniel", "Ryder", "Theodore", "Elias", "Tristan", "Roman", "Leonardo", };
 
         private static readonly string[] lastNames = { "Lennon", "McCartney", "Starr", "Harrison" };
 
@@ -41,6 +42,18 @@ namespace FootballManager_SoftuniProject.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateManager(CreateManagerViewModel model, int id)
         {
+            var checkName = await context.Managers.FirstOrDefaultAsync(m => m.Name == model.Name);
+
+            if (checkName != null)
+            {
+                throw new ArgumentException("Sry the Manager already exist");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                throw new ArgumentException("Error with Create Manager Action");
+            }
+
             var manager = new Manager()
             {
                 Name = model.Name,
@@ -70,7 +83,7 @@ namespace FootballManager_SoftuniProject.Controllers
 
                 await context.Players.AddAsync(player);
             }
-            
+
             await context.SaveChangesAsync();
 
             return RedirectToAction("ProfileDetails", "Profile");

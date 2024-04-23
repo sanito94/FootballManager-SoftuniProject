@@ -9,6 +9,7 @@ using FootballManager_SoftuniProject.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Globalization;
 using System.Security.Claims;
 
@@ -40,58 +41,61 @@ namespace FootballManager_SoftuniProject.Controllers
             return View(model);
         }
 
-		[HttpGet]
-		public async Task<IActionResult> AddPlayersToMarket(int id)
-		{
-			var model = await context.Players.Where(p => p.Id == id)
-				.AsNoTracking()
-				.Select(p => new TransferMarketPlayerViewModel()
-				{
-					Name = p.Name,
-					Age = p.Age,
-					Country = p.Country,
-					Position = p.Position,
-					Price = p.Price,
-					UserId = GetUserId(),
-					PlayerId = id
-				})
-				.FirstOrDefaultAsync();
+        [HttpGet]
+        public async Task<IActionResult> AddPlayersToMarket(int id)
+        {
+            var model = await context.Players.Where(p => p.Id == id)
+                .AsNoTracking()
+                .Select(p => new TransferMarketPlayerAddViewModel()
+                {
+                    Name = p.Name,
+                    Age = p.Age,
+                    Country = p.Country,
+                    Position = p.Position,
+                    Price = p.Price,
+                    PlayerId = id
+                })
+                .FirstOrDefaultAsync();
 
 
-			return View(model);
-		}
+            return View(model);
+        }
 
-		[HttpPost]
-		public async Task<IActionResult> AddPlayersToMarket(TransferMarketPlayerViewModel model, int id)
-		{
-			var player = await context.TranferMarketPlayers.FirstOrDefaultAsync(p => p.PlayerId == id);
+        [HttpPost]
+        public async Task<IActionResult> AddPlayersToMarket(TransferMarketPlayerAddViewModel model, int id)
+        {
+            var player = await context.TranferMarketPlayers.FirstOrDefaultAsync(p => p.PlayerId == id);
 
-			if (player != null)
-			{
-				Response.StatusCode = 404;
-				return RedirectToAction("Error404PlayerExistOnMarket", "Error");
-			}
+            if (player != null)
+            {
+                return RedirectToAction("Error404PlayerExistOnMarket", "Error");
+            }
 
-			var playerr = new TransferMarketPlayer()
-			{
-				Name = model.Name,
-				Age = model.Age,
-				Country = model.Country,
-				FromUserId = GetUserId(),
-				Position = model.Position,
-				Price = model.Price,
-				PlayerId = id
-			};
+            if (!ModelState.IsValid)
+            {
+                throw new ArgumentException("error with the ModelState");
+            }
 
-			await context.TranferMarketPlayers.AddAsync(playerr);
-			await context.SaveChangesAsync();
+            var playerr = new TransferMarketPlayer()
+            {
+                Name = model.Name,
+                Age = model.Age,
+                Country = model.Country,
+                FromUserId = GetUserId(),
+                Position = model.Position,
+                Price = model.Price,
+                PlayerId = id
+            };
 
-			return RedirectToAction("AllSearch", "TransferMarketPlayer");
-		}
+            await context.TranferMarketPlayers.AddAsync(playerr);
+            await context.SaveChangesAsync();
+
+            return RedirectToAction("AllSearch", "TransferMarketPlayer");
+        }
 
 
 
-		[HttpPost]
+        [HttpPost]
         public async Task<IActionResult> BuyPlayer(int id)
         {
             var transferPlayer = await context.TranferMarketPlayers
@@ -104,7 +108,7 @@ namespace FootballManager_SoftuniProject.Controllers
             }
 
             var playerr = await context.Players
-                .Where(p=> p.Id == transferPlayer.PlayerId)
+                .Where(p => p.Id == transferPlayer.PlayerId)
                 .FirstOrDefaultAsync();
 
             var managerBuyer = await context.Managers
@@ -153,6 +157,11 @@ namespace FootballManager_SoftuniProject.Controllers
                 })
                 .FirstOrDefaultAsync();
 
+            if (player == null)
+            {
+                return BadRequest();
+            }
+
             foreach (var manager in managers)
             {
                 if (manager.UserId == player.FromUserId)
@@ -171,8 +180,9 @@ namespace FootballManager_SoftuniProject.Controllers
             var player = await context.TranferMarketPlayers
                 .Where(p => p.Id == id)
                 .AsNoTracking()
-                .Select(p => new TransferMarketPlayerViewModel()
+                .Select(p => new TransferMarketPlayerEditViewModel()
                 {
+                    Id = p.Id,
                     Name = p.Name,
                     Age = p.Age,
                     Country = p.Country,
@@ -186,7 +196,7 @@ namespace FootballManager_SoftuniProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, TransferMarketPlayerViewModel model)
+        public async Task<IActionResult> Edit(int id, TransferMarketPlayerEditViewModel model)
         {
             var player = await context.TranferMarketPlayers
                 .FindAsync(id);
@@ -194,6 +204,11 @@ namespace FootballManager_SoftuniProject.Controllers
             if (player == null)
             {
                 throw new ArgumentException("Error with the Edit Action");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                throw new ArgumentException("Error with Edit Action");
             }
 
             if (player.FromUserId != GetUserId())
@@ -208,6 +223,52 @@ namespace FootballManager_SoftuniProject.Controllers
             return RedirectToAction(nameof(AllSearch));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> DeletePlayer(int id)
+        {
+            var player = await context.TranferMarketPlayers
+                .Where(s => s.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (player == null)
+            {
+                return BadRequest();
+            }
+
+            string currentUserId = GetUserId();
+
+            if (currentUserId != player.FromUserId)
+            {
+                return Unauthorized();
+            }
+
+            var seminarToDelete = new DeletePlayerViewModel()
+            {
+                Id = id,
+                Name = player.Name,
+            };
+
+            return View(seminarToDelete);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(DeletePlayerViewModel model)
+        {
+            var player = await context.TranferMarketPlayers
+                .Where(s => s.Id == model.Id)
+                .FirstOrDefaultAsync();
+
+            if (player == null)
+            {
+                return BadRequest();
+            }
+
+            context.TranferMarketPlayers.Remove(player);
+            await context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(AllSearch));
+
+        }
 
 
         private string GetUserId()

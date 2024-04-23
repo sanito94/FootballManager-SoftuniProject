@@ -22,7 +22,7 @@ namespace FootballManager_SoftuniProject.Controllers
         {
             var model = await context.Teams
                 .AsNoTracking()
-                .Where(t=> t.UserId == GetUserId())
+                .Where(t => t.UserId == GetUserId())
                 .Select(t => new AllTeamsViewModels()
                 {
                     Id = t.Id,
@@ -59,6 +59,11 @@ namespace FootballManager_SoftuniProject.Controllers
             if (checkTeam != null)
             {
                 throw new ArgumentException("Sry the team already exist");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                throw new ArgumentException("Error with Add Action");
             }
 
             var team = new Team()

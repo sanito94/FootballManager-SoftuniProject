@@ -1,21 +1,23 @@
-﻿@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-{
+﻿<ul class="navbar-nav flex-grow-1">
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+    {
                 <li class="nav-item">
-                         <a class="active" asp-area="" asp-controller="Admin" asp-action="AllPlayers">Admin Panel</a>
+                     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AllPlayers">Admin Panel</a>
                 </li>
-}
-else if (User.Identity.IsAuthenticated && User.IsInRole("Member"))
-{
+    }
+    else if (User.Identity.IsAuthenticated && User.IsInRole("Member"))
+    {
               <li class="nav-item">
-                        <a asp-controller="Profile" asp-action="ProfileDetails">Profile</a>
+                    <a class="nav-link text-dark" asp-controller="Profile" asp-action="ProfileDetails">Profile</a>
               </li>
               <li class="nav-item">
-                        <a asp-controller="TransferMarketPlayer" asp-action="AllSearch">Market</a>
+                    <a class="nav-link text-dark" asp-controller="TransferMarketPlayer" asp-action="AllSearch">Market</a>
               </li>
               <li class="nav-item">
-                        <a asp-controller="Player" asp-action="AllPlayer">Your Players</a>
+                    <a class="nav-link text-dark" asp-controller="Player" asp-action="AllPlayer">Your Players</a>
               </li>
               <li class="nav-item">
-                        <a asp-controller="Result" asp-action="AllResults">Table</a>
+                    <a class="nav-link text-dark" asp-controller="Result" asp-action="AllResults">Table</a>
               </li>
-}
+    }
+</ul>

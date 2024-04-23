@@ -55,7 +55,12 @@ namespace FootballManager_SoftuniProject.Controllers
 
             if (check != null)
             {
-                throw new ArgumentException("Sry the player already exist");
+                return BadRequest(model.Name);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                throw new ArgumentException("Error with Add Player Action");
             }
 
             var player = new Player()
@@ -88,11 +93,16 @@ namespace FootballManager_SoftuniProject.Controllers
         [HttpPost]
         public async Task<IActionResult> AddStadium(AllStadiumViewModel model)
         {
-            var check = await context.Stadiums.FirstOrDefaultAsync(s=>s.Name == model.Name);
+            var checkName = await context.Stadiums.FirstOrDefaultAsync(s => s.Name == model.Name);
 
-            if (check != null)
+            if (checkName != null)
             {
                 throw new ArgumentException("Sry the stadium already exist");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                throw new ArgumentException("Error with Add Stadium Action");
             }
 
             var stadium = new Stadium()
@@ -105,6 +115,8 @@ namespace FootballManager_SoftuniProject.Controllers
 
             return RedirectToAction(nameof(AllPlayers));
         }
+
+
 
 
         [HttpGet]
@@ -156,6 +168,11 @@ namespace FootballManager_SoftuniProject.Controllers
             if (player != null)
             {
                 throw new ArgumentException("Sorry but the player already exist in the Market");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                throw new ArgumentException("Error with Add Player Action");
             }
 
             var playerr = new TransferMarketPlayer()

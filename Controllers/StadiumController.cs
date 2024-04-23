@@ -45,6 +45,11 @@ namespace FootballManager_SoftuniProject.Controllers
         [HttpPost]
         public async Task<IActionResult> AddStadiums(AllStadiumViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new ArgumentException("Error with Add Stadium Action");
+            }
+
             var stadium = new Stadium()
             {
                 Name = model.Name,

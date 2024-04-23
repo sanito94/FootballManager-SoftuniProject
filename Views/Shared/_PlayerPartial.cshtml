@@ -15,16 +15,16 @@
 
             @if (User.Identity.Name == Model.UserId)
             {
-                 <a asp-controller="TransferMarketPlayer" asp-action="Edit" asp-route-id="@Model.Id"
-                    class="btn btn-success">Edit</a>
+                <a asp-controller="TransferMarketPlayer" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success">Edit</a>
             }
             else
             {
-                           <form class="input-group-sm" asp-controller="TransferMArketPlayer" asp-action="BuyPlayer" asp-route-id="@Model.Id">
-                                                <input type="submit" value="Buy" class="fs-6 btn btn-danger mb-2 w-30 p-3 fw-bold"/>
-                                    </form>
+                <form class="input-group-sm" asp-controller="TransferMArketPlayer" asp-action="BuyPlayer" asp-route-id="@Model.Id">
+                    <input type="submit" value="Buy" class="fs-6 btn btn-danger mb-2 w-30 p-3 fw-bold"/>
+                </form>
+                <a asp-controller="TransferMarketPlayer" asp-action="DeletePlayer" asp-route-id="@Model.Id" class="btn btn-secondary">Remove Player</a>    
             }
-            
+
         </div>
     </div>
 </div>

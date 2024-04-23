@@ -11,26 +11,28 @@
 
     @foreach (var p in Model)
     {
-                <div class="card col-4" style="width: 20rem; ">
-                    <div class="card-body">
-                        <h4 class="card-title mt-1">@p.Name</h4>
-                        <p class="mb-0"><span class="fw-bold">Country: </span>@p.Country</p>
-                        <p class="mb-0"><span class="fw-bold">Age: </span>@p.Age</p>
-                        <p class="mb-0"><span class="fw-bold">Position: </span>@p.Position</p>
-                        <p class="mb-0"><span class="fw-bold">Price: </span>@p.Price</p>
+                    <div class="card col-4" style="width: 20rem; ">
+                        <div class="card-body">
+                            <h4 class="card-title mt-1">@p.Name</h4>
+                            <p class="mb-0"><span class="fw-bold">Country: </span>@p.Country</p>
+                            <p class="mb-0"><span class="fw-bold">Age: </span>@p.Age</p>
+                            <p class="mb-0"><span class="fw-bold">Position: </span>@p.Position</p>
+                            <p class="mb-0"><span class="fw-bold">Price: </span>@p.Price</p>
+                        </div>
+                            <a asp-controller="TransferMarketPlayer" asp-action="AddPlayersToMarket" asp-route-id="@p.Id" class="btn btn-info mb-2 w-100 p-3 fw-bold">Add to Market</a>
+                                <a asp-controller="Admin" asp-action="DeletePlayer" asp-route-id="@p.Id" class="btn btn-secondary mb-2 w-100 p-3 fw-bold">Delete Player</a>
                     </div>
-                        <a asp-controller="TransferMarketPlayer" asp-action="AddPlayersToMarket" asp-route-id="@p.Id" class="btn btn-info mb-2 w-100 p-3 fw-bold">Add to Market</a>
-                </div>
     }
 
     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
     {
-            <a asp-controller="Admin" asp-action="AddPlayers" class="btn btn-primary btn-lg" role="button">Add Player to the Team</a>
-            <a asp-controller="Admin" asp-action="MarketPlayers" class="btn btn-danger btn-lg" role="button">Transfer Market</a>
-            <a asp-controller="Admin" asp-action="AddStadium" class="btn btn-secondary btn-lg" role="button">Add a Stadium</a>
+                <a asp-controller="Admin" asp-action="AddPlayers" class="btn btn-primary btn-lg" role="button">Add Player to the Team</a>
+                <a asp-controller="Admin" asp-action="MarketPlayers" class="btn btn-danger btn-lg" role="button">Transfer Market</a>
+                <a asp-controller="Admin" asp-action="AddStadium" class="btn btn-secondary btn-lg" role="button">Add a Stadium</a>
+
     }
 </div>
 
 @section Scripts {
-            <partial name="_ValidationScriptsPartial" />
+                <partial name="_ValidationScriptsPartial" />
 }
